@@ -158,7 +158,7 @@ Si ha hecho refactorizaciones en su código, puede documentarlas usando el sigui
 ### Refactorización X: 
 En esta refactorización añadimos un mapa de parámtros a la partida para ayudar a personalizar la información precalculada de la que partimos en cada fase del juego.
 #### Estado inicial del código
-``` 
+```Java 
 class Animal
 {
 }
