@@ -27,9 +27,7 @@ _Os recomentamos usar la siguiente plantilla de contenidos que usa un formato ta
  ### HU-(ISSUE#ID): < Nombre > - [Enlace a la Issue asociada a la historia de usuario]()
 |-----|
 |Descripción de la historia siguiendo el esquema:  "Como <rol> quiero que el sistema <funcionalidad>  para poder <objetivo/beneficio>."|
-|-----|
 |Mockups de Interfaz de usuario de la historia|
-|-----|
 |Decripción de las interacciones concretas a realizar con la interfaz de usuario del sistema para lleva a cabo la historia. |
 |-----|
 
