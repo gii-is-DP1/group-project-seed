@@ -62,7 +62,7 @@ _En este caso, como mermaid no soporta la definición de paquetes, hemos usado u
 En esta sección procesaremos el mockup del tablero de juego (o los mockups si el tablero cambia en las distintas fases del juego). Etiquetaremos las zonas de cada una de las pantallas para identificar componentes a implementar. Para cada mockup se especificará el árbol de jerarquía de componentes, así como, para cada componente el estado que necesita mantener, las llamadas a la API que debe realizar y los parámetros de configuración global que consideramos que necesita usar cada componente concreto. 
 Por ejemplo, para la pantalla de visualización de métricas del usuario en un hipotético módulo de juego social:
 
-![Descomposición en componentes de la interfaz de estadísticas](https://github.com/gii-is-DP1/group-project-seed/assets/756431/12b36c37-39ed-422e-b8d9-56c94753cbdc)
+![Descomposición en componentes de la interfaz de estadísticas](https://github.com/gii-is-DP1/react-petclinic/assets/756431/12b36c37-39ed-422e-b8d9-56c94753cbdc)
 
   - App – Componente principal de la aplicación
     - $\color{orange}{\textsf{NavBar – Barra de navegación lateral}}$
