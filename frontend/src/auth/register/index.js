@@ -76,7 +76,7 @@ export default function Register() {
   }
 
   useEffect(() => {
-    if (type === "Owner" || type === "Vet") {
+    if (type === "Owner") {
       if (registerFormOwnerInputs[5].values.length === 1){
         fetch("/api/v1/clinics")
         .then(function (response) {
@@ -111,8 +111,7 @@ export default function Register() {
           <FormGenerator
             ref={registerFormRef}
             inputs={
-              type === "Owner" ? registerFormOwnerInputs 
-              : type === "Vet" ? registerFormVetInputs
+              type === "Player" ? registerFormOwnerInputs               
               : registerFormClinicOwnerInputs
             }
             onSubmit={handleSubmit}
@@ -138,22 +137,15 @@ export default function Register() {
               value="Owner"
               onClick={handleButtonClick}
             >
-              Owner
+              Player
             </button>
             <button
               className="auth-button"
               value="Vet"
               onClick={handleButtonClick}
             >
-              Vet
-            </button>
-            <button
-              className="auth-button"
-              value="Clinic Owner"
-              onClick={handleButtonClick}
-            >
-              Clinic Owner
-            </button>
+              Admin
+            </button>            
           </div>
         </div>
       </div>
