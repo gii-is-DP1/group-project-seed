@@ -24,14 +24,12 @@ _Ej3: Administrador: Dueño de la clínica que se encarga de dar de alta veterin
 
 A continuación se definen  todas las historias de usuario a implementar:
 _Os recomentamos usar la siguiente plantilla de contenidos que usa un formato tabular:_
- ### HU-(ISSUE#ID): < Nombre > - [Enlace a la Issue asociada a la historia de usuario]()
- 
+ ### HU-(ISSUE#ID): Nombre ([Enlace a la Issue asociada a la historia de usuario]()
+|Descripción de la historia siguiendo el esquema:  "Como <rol> quiero que el sistema <funcionalidad>  para poder <objetivo/beneficio>."| 
 |-----|
-|Descripción de la historia siguiendo el esquema:  "Como <rol> quiero que el sistema <funcionalidad>  para poder <objetivo/beneficio>."|
 |Mockups (prototipos en formato imagen de baja fidelidad) de la interfaz de usuario del sistema|
-|-----|
 |Decripción de las interacciones concretas a realizar con la interfaz de usuario del sistema para lleva a cabo la historia. |
-|-----|
+
 
 
 ## Diagrama conceptual del sistema
