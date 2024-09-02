@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.springframework.samples</groupId>
-	<artifactId>spring-petclinic</artifactId>
-	<version>2.2.0.BUILD-SNAPSHOT</version>
+	<groupId>es.us.dp1</groupId>
+	<artifactId>lx-xy-2425-game-name</artifactId>
+	<version>0.1.0.BUILD-SNAPSHOT</version>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.1</version>
+		<version>3.3.3</version>
 	</parent>
-	<name>PetClinic React</name>
+	<name>DP1 Game Template</name>
 
 	<properties>
 
@@ -130,7 +130,7 @@
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
-			<version>20230227</version>
+			<version>20240303</version>
 		</dependency>
 		<!-- Swagger -->
 		<dependency>
