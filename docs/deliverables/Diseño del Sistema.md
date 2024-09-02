@@ -158,16 +158,18 @@ Si ha hecho refactorizaciones en su código, puede documentarlas usando el sigui
 ### Refactorización X: 
 En esta refactorización añadimos un mapa de parámtros a la partida para ayudar a personalizar la información precalculada de la que partimos en cada fase del juego.
 #### Estado inicial del código
-''' 
-código fuente en java, jsx o javascript
-''' 
+``` 
+class Animal
+{
+}
+``` 
 _Puedes añadir información sobre el lenguaje concreto en el que está escrito el código para habilitar el coloreado de sintaxis tal y como se especifica en [este tutorial](https://docs.github.com/es/get-started/writing-on-github/working-with-advanced-formatting/creating-and-highlighting-code-blocks)_
 
 #### Estado del código refactorizado
 
-''' 
+```
 código fuente en java, jsx o javascript
-''' 
+```
 #### Problema que nos hizo realizar la refactorización
 _Ej: Era difícil añadir información para implementar la lógica de negocio en cada una de las fases del juego (en nuestro caso varía bastante)_
 #### Ventajas que presenta la nueva versión del código respecto de la versión original
