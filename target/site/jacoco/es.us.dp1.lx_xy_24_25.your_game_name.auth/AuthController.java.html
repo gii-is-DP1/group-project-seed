@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuthController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">DP1 Game Template</a> &gt; <a href="index.source.html" class="el_package">es.us.dp1.lx_xy_24_25.your_game_name.auth</a> &gt; <span class="el_source">AuthController.java</span></div><h1>AuthController.java</h1><pre class="source lang-java linenums">package es.us.dp1.lx_xy_24_25.your_game_name.auth;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import jakarta.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import es.us.dp1.lx_xy_24_25.your_game_name.auth.payload.response.JwtResponse;
+
+import es.us.dp1.lx_xy_24_25.your_game_name.configuration.jwt.JwtUtils;
+import es.us.dp1.lx_xy_24_25.your_game_name.user.UserService;
+
+import es.us.dp1.lx_xy_24_25.your_game_name.configuration.services.UserDetailsImpl;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import es.us.dp1.lx_xy_24_25.your_game_name.auth.payload.request.LoginRequest;
+import es.us.dp1.lx_xy_24_25.your_game_name.auth.payload.request.SignupRequest;
+import es.us.dp1.lx_xy_24_25.your_game_name.auth.payload.response.MessageResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+import org.springframework.security.authentication.BadCredentialsException;
+
+
+@RestController
+@RequestMapping(&quot;/api/v1/auth&quot;)
+@Tag(name = &quot;Authentication&quot;, description = &quot;The Authentication API based on JWT&quot;)
+public class AuthController {
+
+	private final AuthenticationManager authenticationManager;
+	private final UserService userService;
+	private final JwtUtils jwtUtils;
+	private final AuthService authService;
+
+	@Autowired
+	public AuthController(AuthenticationManager authenticationManager, UserService userService, JwtUtils jwtUtils,
+<span class="fc" id="L47">			AuthService authService) {</span>
+<span class="fc" id="L48">		this.userService = userService;</span>
+<span class="fc" id="L49">		this.jwtUtils = jwtUtils;</span>
+<span class="fc" id="L50">		this.authenticationManager = authenticationManager;</span>
+<span class="fc" id="L51">		this.authService = authService;</span>
+<span class="fc" id="L52">	}</span>
+
+	@PostMapping(&quot;/signin&quot;)
+	public ResponseEntity authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+		try{
+<span class="fc" id="L57">			Authentication authentication = authenticationManager.authenticate(</span>
+<span class="fc" id="L58">				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));</span>
+
+<span class="fc" id="L60">			SecurityContextHolder.getContext().setAuthentication(authentication);</span>
+<span class="fc" id="L61">			String jwt = jwtUtils.generateJwtToken(authentication);</span>
+
+<span class="fc" id="L63">			UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();</span>
+<span class="fc" id="L64">			List&lt;String&gt; roles = userDetails.getAuthorities().stream().map(item -&gt; item.getAuthority())</span>
+<span class="fc" id="L65">				.collect(Collectors.toList());</span>
+
+<span class="fc" id="L67">			return ResponseEntity.ok().body(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), roles));</span>
+<span class="nc" id="L68">		}catch(BadCredentialsException exception){</span>
+<span class="nc" id="L69">			return ResponseEntity.badRequest().body(&quot;Bad Credentials!&quot;);</span>
+		}
+	}
+
+	@GetMapping(&quot;/validate&quot;)
+	public ResponseEntity&lt;Boolean&gt; validateToken(@RequestParam String token) {
+<span class="fc" id="L75">		Boolean isValid = jwtUtils.validateJwtToken(token);</span>
+<span class="fc" id="L76">		return ResponseEntity.ok(isValid);</span>
+	}
+
+	
+	@PostMapping(&quot;/signup&quot;)	
+	public ResponseEntity&lt;MessageResponse&gt; registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+<span class="fc bfc" id="L82" title="All 2 branches covered.">		if (userService.existsUser(signUpRequest.getUsername()).equals(true)) {</span>
+<span class="fc" id="L83">			return ResponseEntity.badRequest().body(new MessageResponse(&quot;Error: Username is already taken!&quot;));</span>
+		}
+<span class="fc" id="L85">		authService.createUser(signUpRequest);</span>
+<span class="fc" id="L86">		return ResponseEntity.ok(new MessageResponse(&quot;User registered successfully!&quot;));</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

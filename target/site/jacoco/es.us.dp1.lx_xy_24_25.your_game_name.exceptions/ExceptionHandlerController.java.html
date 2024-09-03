@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExceptionHandlerController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">DP1 Game Template</a> &gt; <a href="index.source.html" class="el_package">es.us.dp1.lx_xy_24_25.your_game_name.exceptions</a> &gt; <span class="el_source">ExceptionHandlerController.java</span></div><h1>ExceptionHandlerController.java</h1><pre class="source lang-java linenums">package es.us.dp1.lx_xy_24_25.your_game_name.exceptions;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
+
+@RestControllerAdvice
+<span class="fc" id="L18">public class ExceptionHandlerController {</span>
+
+	@ExceptionHandler(Exception.class)
+	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+	public ResponseEntity&lt;ErrorMessage&gt; globalExceptionHandler(Exception ex, WebRequest request) {
+<span class="nc" id="L23">		ErrorMessage message = new ErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR.value(), new Date(), ex.getMessage(),</span>
+<span class="nc" id="L24">				request.getDescription(false));</span>
+
+<span class="nc" id="L26">		return new ResponseEntity&lt;&gt;(message, HttpStatus.INTERNAL_SERVER_ERROR);</span>
+	}
+
+	@ExceptionHandler(ResourceNotFoundException.class)
+	@ResponseStatus(value = HttpStatus.NOT_FOUND)
+	public ResponseEntity&lt;ErrorMessage&gt; resourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
+<span class="fc" id="L32">		ErrorMessage message = new ErrorMessage(HttpStatus.NOT_FOUND.value(), new Date(), ex.getMessage(),</span>
+<span class="fc" id="L33">				request.getDescription(false));</span>
+
+<span class="fc" id="L35">		return new ResponseEntity&lt;&gt;(message, HttpStatus.NOT_FOUND);</span>
+	}
+
+	@ExceptionHandler(ResourceNotOwnedException.class)
+	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+	public ResponseEntity&lt;ErrorMessage&gt; resourceNotOwnedException(ResourceNotOwnedException ex, WebRequest request) {
+<span class="nc" id="L41">		ErrorMessage message = new ErrorMessage(HttpStatus.BAD_REQUEST.value(), new Date(), ex.getMessage(),</span>
+<span class="nc" id="L42">				request.getDescription(false));</span>
+
+<span class="nc" id="L44">		return new ResponseEntity&lt;&gt;(message, HttpStatus.BAD_REQUEST);</span>
+	}
+
+//	@ExceptionHandler(value = TokenRefreshException.class)
+//	@ResponseStatus(HttpStatus.FORBIDDEN)
+//	public ResponseEntity&lt;ErrorMessage&gt; handleTokenRefreshException(TokenRefreshException ex, WebRequest request) {
+//		ErrorMessage message = new ErrorMessage(HttpStatus.FORBIDDEN.value(), new Date(), ex.getMessage(),
+//				request.getDescription(false));
+//
+//		return new ResponseEntity&lt;ErrorMessage&gt;(message, HttpStatus.FORBIDDEN);
+//	}	
+	
+
+	@ExceptionHandler(value = MethodArgumentNotValidException.class)
+	public final ResponseEntity&lt;ErrorMessage&gt; handleMethodArgumentException(MethodArgumentNotValidException ex,
+			WebRequest request) {
+<span class="nc" id="L60">		Map&lt;String, Object&gt; fieldError = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L61">		List&lt;FieldError&gt; fieldErrors = ex.getBindingResult().getFieldErrors();</span>
+<span class="nc" id="L62">		fieldErrors.stream().forEach(error -&gt; fieldError.put(error.getField(), error.getDefaultMessage()));</span>
+<span class="nc" id="L63">		ErrorMessage message = new ErrorMessage(HttpStatus.BAD_REQUEST.value(), new Date(), fieldError.toString(),</span>
+<span class="nc" id="L64">				request.getDescription(false));</span>
+
+<span class="nc" id="L66">		return new ResponseEntity&lt;&gt;(message, HttpStatus.BAD_REQUEST);</span>
+	}
+
+	@ExceptionHandler(value = AccessDeniedException.class)
+	@ResponseStatus(HttpStatus.FORBIDDEN)
+	public ResponseEntity&lt;ErrorMessage&gt; handleAccessDeniedException(AccessDeniedException ex, WebRequest request) {
+<span class="fc" id="L72">		ErrorMessage message = new ErrorMessage(HttpStatus.FORBIDDEN.value(), new Date(), ex.getMessage(),</span>
+<span class="fc" id="L73">				request.getDescription(false));</span>
+
+<span class="fc" id="L75">		return new ResponseEntity&lt;&gt;(message, HttpStatus.FORBIDDEN);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

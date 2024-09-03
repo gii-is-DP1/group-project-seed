@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SecurityConfiguration.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">DP1 Game Template</a> &gt; <a href="index.source.html" class="el_package">es.us.dp1.lx_xy_24_25.your_game_name.configuration</a> &gt; <span class="el_source">SecurityConfiguration.java</span></div><h1>SecurityConfiguration.java</h1><pre class="source lang-java linenums">package es.us.dp1.lx_xy_24_25.your_game_name.configuration;
+
+import static org.springframework.security.config.Customizer.withDefaults;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import es.us.dp1.lx_xy_24_25.your_game_name.configuration.jwt.AuthEntryPointJwt;
+import es.us.dp1.lx_xy_24_25.your_game_name.configuration.jwt.AuthTokenFilter;
+import es.us.dp1.lx_xy_24_25.your_game_name.configuration.services.UserDetailsServiceImpl;
+
+@Configuration
+@EnableWebSecurity
+<span class="fc" id="L34">public class SecurityConfiguration {</span>
+
+	@Autowired
+	UserDetailsServiceImpl userDetailsService;
+
+	@Autowired
+	private AuthEntryPointJwt unauthorizedHandler;
+
+	@Autowired
+	DataSource dataSource;
+
+	private static final String ADMIN = &quot;ADMIN&quot;;
+	private static final String CLINIC_OWNER = &quot;CLINIC_OWNER&quot;;
+	
+
+	@Bean
+	protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
+		
+<span class="fc" id="L52">		http</span>
+<span class="fc" id="L53">			.cors(withDefaults())		</span>
+<span class="fc" id="L54">			.csrf(AbstractHttpConfigurer::disable)		</span>
+<span class="fc" id="L55">			.sessionManagement(session -&gt; session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))			</span>
+<span class="fc" id="L56">			.headers((headers) -&gt; headers.frameOptions((frameOptions) -&gt; frameOptions.disable()))</span>
+<span class="fc" id="L57">			.exceptionHandling((exepciontHandling) -&gt; exepciontHandling.authenticationEntryPoint(unauthorizedHandler))			</span>
+			
+<span class="fc" id="L59">			.authorizeHttpRequests(authorizeRequests -&gt;	authorizeRequests</span>
+<span class="fc" id="L60">			.requestMatchers(&quot;/resources/**&quot;, &quot;/webjars/**&quot;, &quot;/static/**&quot;, &quot;/swagger-resources/**&quot;).permitAll()			</span>
+<span class="fc" id="L61">			.requestMatchers( &quot;/api/v1/clinics&quot;,&quot;/&quot;, &quot;/oups&quot;,&quot;/api/v1/auth/**&quot;,&quot;/v3/api-docs/**&quot;,&quot;/swagger-ui.html&quot;,&quot;/swagger-ui/**&quot;).permitAll()												</span>
+<span class="fc" id="L62">			.requestMatchers(&quot;/api/v1/developers&quot;).permitAll()												</span>
+<span class="fc" id="L63">			.requestMatchers(&quot;/api/v1/plan&quot;).hasAuthority(&quot;OWNER&quot;)</span>
+<span class="fc" id="L64">			.requestMatchers(AntPathRequestMatcher.antMatcher(&quot;/api/v1/users/**&quot;)).hasAuthority(ADMIN)</span>
+<span class="fc" id="L65">			.requestMatchers(&quot;/api/v1/clinicOwners/all&quot;).hasAuthority(ADMIN)</span>
+<span class="fc" id="L66">			.requestMatchers(AntPathRequestMatcher.antMatcher(&quot;/api/v1/clinicOwners/**&quot;)).hasAnyAuthority(ADMIN, CLINIC_OWNER)</span>
+<span class="fc" id="L67">			.requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.DELETE, &quot;/api/v1/consultations/**&quot;)).hasAuthority(ADMIN)</span>
+<span class="fc" id="L68">			.requestMatchers(AntPathRequestMatcher.antMatcher(&quot;/api/v1/owners/**&quot;)).hasAuthority(ADMIN)</span>
+<span class="fc" id="L69">			.requestMatchers(AntPathRequestMatcher.antMatcher(&quot;/api/v1/visits/**&quot;)).authenticated()			</span>
+<span class="fc" id="L70">			.requestMatchers(HttpMethod.GET, &quot;/api/v1/pets/stats&quot;).hasAuthority(ADMIN)</span>
+<span class="fc" id="L71">			.requestMatchers(&quot;/api/v1/pets&quot;).authenticated()</span>
+<span class="fc" id="L72">			.requestMatchers(AntPathRequestMatcher.antMatcher(&quot;/api/v1/pets/**&quot;)).authenticated()</span>
+<span class="fc" id="L73">			.requestMatchers(AntPathRequestMatcher.antMatcher(&quot;/api/v1/clinics/**&quot;)).hasAnyAuthority(CLINIC_OWNER, ADMIN)</span>
+<span class="fc" id="L74">			.requestMatchers(HttpMethod.GET, &quot;/api/v1/vets/stats&quot;).hasAuthority(ADMIN)</span>
+<span class="fc" id="L75">			.requestMatchers(AntPathRequestMatcher.antMatcher(HttpMethod.GET, &quot;/api/v1/vets/**&quot;)).authenticated()</span>
+<span class="fc" id="L76">			.requestMatchers(AntPathRequestMatcher.antMatcher(&quot;/api/v1/vets/**&quot;)).hasAnyAuthority(ADMIN, &quot;VET&quot;, CLINIC_OWNER) </span>
+<span class="fc" id="L77">			.requestMatchers(AntPathRequestMatcher.antMatcher(&quot;/h2-console/**&quot;)).permitAll()</span>
+<span class="fc" id="L78">			.anyRequest().authenticated())					</span>
+			
+<span class="fc" id="L80">			.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);		</span>
+<span class="fc" id="L81">		return http.build();</span>
+	}
+
+	@Bean
+	public AuthTokenFilter authenticationJwtTokenFilter() {
+<span class="fc" id="L86">		return new AuthTokenFilter();</span>
+	}
+
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception{
+<span class="fc" id="L91">		return config.getAuthenticationManager();</span>
+	}	
+
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+<span class="fc" id="L97">		return new BCryptPasswordEncoder();</span>
+	}
+	
+	
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

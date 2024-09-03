@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserRestController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">DP1 Game Template</a> &gt; <a href="index.source.html" class="el_package">es.us.dp1.lx_xy_24_25.your_game_name.user</a> &gt; <span class="el_source">UserRestController.java</span></div><h1>UserRestController.java</h1><pre class="source lang-java linenums">/*
+ * Copyright 2002-2013 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package es.us.dp1.lx_xy_24_25.your_game_name.user;
+
+import java.util.List;
+
+import jakarta.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import es.us.dp1.lx_xy_24_25.your_game_name.exceptions.AccessDeniedException;
+import es.us.dp1.lx_xy_24_25.your_game_name.util.RestPreconditions;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import es.us.dp1.lx_xy_24_25.your_game_name.auth.payload.response.MessageResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
+@RestController
+@RequestMapping(&quot;/api/v1/users&quot;)
+@SecurityRequirement(name = &quot;bearerAuth&quot;)
+class UserRestController {
+
+	private final UserService userService;
+	private final AuthoritiesService authService;
+
+	@Autowired
+<span class="fc" id="L51">	public UserRestController(UserService userService, AuthoritiesService authService) {</span>
+<span class="fc" id="L52">		this.userService = userService;</span>
+<span class="fc" id="L53">		this.authService = authService;</span>
+<span class="fc" id="L54">	}</span>
+
+	@GetMapping
+	public ResponseEntity&lt;List&lt;User&gt;&gt; findAll(@RequestParam(required = false) String auth) {
+		List&lt;User&gt; res;
+<span class="fc bfc" id="L59" title="All 2 branches covered.">		if (auth != null) {</span>
+<span class="fc" id="L60">			res = (List&lt;User&gt;) userService.findAllByAuthority(auth);</span>
+		} else
+<span class="fc" id="L62">			res = (List&lt;User&gt;) userService.findAll();</span>
+<span class="fc" id="L63">		return new ResponseEntity&lt;&gt;(res, HttpStatus.OK);</span>
+	}
+
+	@GetMapping(&quot;authorities&quot;)
+	public ResponseEntity&lt;List&lt;Authorities&gt;&gt; findAllAuths() {
+<span class="fc" id="L68">		List&lt;Authorities&gt; res = (List&lt;Authorities&gt;) authService.findAll();</span>
+<span class="fc" id="L69">		return new ResponseEntity&lt;&gt;(res, HttpStatus.OK);</span>
+	}
+
+	@GetMapping(value = &quot;{id}&quot;)
+	public ResponseEntity&lt;User&gt; findById(@PathVariable(&quot;id&quot;) Integer id) {
+<span class="fc" id="L74">		return new ResponseEntity&lt;&gt;(userService.findUser(id), HttpStatus.OK);</span>
+	}
+
+	@PostMapping
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseEntity&lt;User&gt; create(@RequestBody @Valid User user) {
+<span class="fc" id="L80">		User savedUser = userService.saveUser(user);</span>
+<span class="fc" id="L81">		return new ResponseEntity&lt;&gt;(savedUser, HttpStatus.CREATED);</span>
+	}
+
+	@PutMapping(value = &quot;{userId}&quot;)
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity&lt;User&gt; update(@PathVariable(&quot;userId&quot;) Integer id, @RequestBody @Valid User user) {
+<span class="fc" id="L87">		RestPreconditions.checkNotNull(userService.findUser(id), &quot;User&quot;, &quot;ID&quot;, id);</span>
+<span class="fc" id="L88">		return new ResponseEntity&lt;&gt;(this.userService.updateUser(user, id), HttpStatus.OK);</span>
+	}
+
+	@DeleteMapping(value = &quot;{userId}&quot;)
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity&lt;MessageResponse&gt; delete(@PathVariable(&quot;userId&quot;) int id) {
+<span class="fc" id="L94">		RestPreconditions.checkNotNull(userService.findUser(id), &quot;User&quot;, &quot;ID&quot;, id);</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">		if (userService.findCurrentUser().getId() != id) {</span>
+<span class="fc" id="L96">			userService.deleteUser(id);</span>
+<span class="fc" id="L97">			return new ResponseEntity&lt;&gt;(new MessageResponse(&quot;User deleted!&quot;), HttpStatus.OK);</span>
+		} else
+<span class="fc" id="L99">			throw new AccessDeniedException(&quot;You can't delete yourself!&quot;);</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

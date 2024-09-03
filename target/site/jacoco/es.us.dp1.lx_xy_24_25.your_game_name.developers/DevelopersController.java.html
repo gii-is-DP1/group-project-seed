@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DevelopersController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">DP1 Game Template</a> &gt; <a href="index.source.html" class="el_package">es.us.dp1.lx_xy_24_25.your_game_name.developers</a> &gt; <span class="el_source">DevelopersController.java</span></div><h1>DevelopersController.java</h1><pre class="source lang-java linenums">package es.us.dp1.lx_xy_24_25.your_game_name.developers;
+
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.List;
+
+import org.apache.maven.model.Developer;
+import org.apache.maven.model.Model;
+import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
+import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
+import es.us.dp1.lx_xy_24_25.your_game_name.model.Person;
+
+
+<span class="nc" id="L14">public class DevelopersController {</span>
+    List&lt;Developer&gt; developers;
+
+
+    public List&lt;Developer&gt; getDevelopers(){
+<span class="nc bnc" id="L19" title="All 2 branches missed.">        if(developers==null)</span>
+<span class="nc" id="L20">            loadDevelopers();</span>
+<span class="nc" id="L21">        return developers;        </span>
+    }
+
+    private void loadDevelopers(){        
+<span class="nc" id="L25">        MavenXpp3Reader reader = new MavenXpp3Reader();</span>
+        try {
+<span class="nc" id="L27">            Model model = reader.read(new FileReader(&quot;pom.xml&quot;));</span>
+<span class="nc" id="L28">            Person p=null;</span>
+<span class="nc" id="L29">            developers=model.getDevelopers();                                            </span>
+<span class="nc" id="L30">        } catch (IOException | XmlPullParserException e) {</span>
+            // TODO Auto-generated catch block
+<span class="nc" id="L32">            e.printStackTrace();</span>
+<span class="nc" id="L33">        }</span>
+        
+<span class="nc" id="L35">    }</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
