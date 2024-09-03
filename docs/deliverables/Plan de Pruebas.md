@@ -41,7 +41,7 @@ Las pruebas se ejecutarán en el entorno de desarrollo y, eventualmente, en el e
 ### 5.1 Cobertura de Pruebas
 
 El informe de cobertura de pruebas se puede consultar [aquí](
-https://html-preview.github.io/?url=https://github.com/gii-is-DP1/group-project-seed/target/site/jacoco/index.html).
+https://html-preview.github.io/?url=https://raw.githubusercontent.com/gii-is-DP1/group-project-seed/main/target/site/jacoco/index.html).
 
 ### 5.2 Matriz de Trazabilidad
 
