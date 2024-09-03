@@ -21,6 +21,9 @@ target/site/lx-xy-2425-game-name.pdf
 target/site/images
 target/site/css
 target/site/*.html
+target/site/jacoco/*.csv
+target/site/jacoco/*.xml
+target/site/jacoco/jacoco-sessions.html
 .sts4-cache/
 .vscode/*
 !.vscode/settings.json
