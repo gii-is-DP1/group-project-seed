@@ -27,7 +27,6 @@ export default function Register() {
     if(!registerFormRef.current.validate()) return;
 
     const request = values;
-    request.clinic = clinics.filter((clinic) => clinic.name === request.clinic)[0];
     request["authority"] = authority;
     let state = "";
 
@@ -73,35 +72,7 @@ export default function Register() {
       .catch((message) => {
         alert(message);
       });
-  }
-
-  useEffect(() => {
-    if (type === "Owner") {
-      if (registerFormOwnerInputs[5].values.length === 1){
-        fetch("/api/v1/clinics")
-        .then(function (response) {
-          if (response.status === 200) {
-            return response.json();
-          } else {
-            return response.json();
-          }
-        })
-        .then(function (data) {
-          setClinics(data);
-          if (data.length !== 0) {
-            let clinicNames = data.map((clinic) => {
-              return clinic.name;
-            });
-
-            registerFormOwnerInputs[5].values = ["None", ...clinicNames];
-          }
-        })
-        .catch((message) => {
-          alert(message);
-        });
-      }
-    }
-  }, [type]);
+  }  
 
   if (type) {
     return (
