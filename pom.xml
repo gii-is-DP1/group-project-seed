@@ -3,7 +3,7 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>es.us.dp1</groupId>
-	<artifactId>lx-xy-2425-game-name</artifactId>
+	<artifactId>LY-XX-2425-MyGameDP1</artifactId>
 	<version>0.1.0.BUILD-SNAPSHOT</version>
 
 	<parent>
@@ -11,7 +11,7 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.3.3</version>
 	</parent>
-	<name>DP1 Game Template</name>
+	<name>My Game DP1 2024-2025</name>
 
 	<properties>
 
@@ -37,9 +37,64 @@
 
 	<developers>
 		<developer>
-			<name>JAParejo</name>
+			<id>JAP</id>
+			<name>J. A. Parejo</name>
 			<email>japarejo@gmail.com</email>
-			<url>http://www.isa.us.es</url>
+			<url>https://departamento.us.es/lsi/</url>
+			<roles>
+				<role>developer</role>
+				<role>coordinator</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>IBET</id>
+			<name>I. B. Estrada</name>
+			<email>bedilia@us.es</email>
+			<url>https://personal.us.es/iestrada/</url>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<properties>
+				<picUrl>https://personal.us.es/iestrada/images/pic00.png</picUrl>
+			</properties>
+		</developer>
+		<developer>
+			<id>JMG</id>
+			<name>J. M. Garcia</name>
+			<properties>
+				<picUrl>https://score.us.es/wp-content/uploads/jmariagarcia.jpg</picUrl>
+			</properties>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>CMC</id>
+			<name>C. Muller</name>
+			<email>muller@hotmail.com</email>
+			<url>https://score.us.es/member/carlos-muller-cejas/</url>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>MR</id>
+			<name>M. Resinas</name>
+			<email>mresinas@gmail.com</email>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<properties>
+				<picUrl>https://score.us.es/wp-content/uploads/mresinas-1.jpg</picUrl>
+			</properties>
+		</developer>
+		<developer>
+			<id>ABS</id>
+			<name>A. B. Sanchez</name>
+			<url>https://departamento.us.es/lsi/</url>
+			<roles>
+				<role>developer</role>
+			</roles>
 		</developer>
 	</developers>
 
