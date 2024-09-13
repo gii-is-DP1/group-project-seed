@@ -8,13 +8,18 @@ import org.apache.maven.model.Developer;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import es.us.dp1.lx_xy_24_25.your_game_name.model.Person;
 
-
+@RestController
+@RequestMapping("/api/v1/developers")
 public class DevelopersController {
     List<Developer> developers;
 
-
+    @GetMapping
     public List<Developer> getDevelopers(){
         if(developers==null)
             loadDevelopers();
