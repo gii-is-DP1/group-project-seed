@@ -14,6 +14,7 @@ import UserListAdmin from "./admin/users/UserListAdmin";
 import UserEditAdmin from "./admin/users/UserEditAdmin";
 import SwaggerDocs from "./public/swagger";
 import DeveloperList from "./developers";
+import AchievementsList from "./achievements/achievementsList";
 
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
@@ -54,7 +55,7 @@ function App() {
     if (role === "PLAYER") {
       ownerRoutes = (
         <>
-          
+          <Route path = "/Achievements" element = {<PrivateRoute><AchievementsList /></PrivateRoute>}/> 
         </>)
     }    
   })
