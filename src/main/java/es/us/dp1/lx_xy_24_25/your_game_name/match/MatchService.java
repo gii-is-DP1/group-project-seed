@@ -1,6 +1,7 @@
 package es.us.dp1.lx_xy_24_25.your_game_name.match;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ public class MatchService {
 
 
     @Autowired
-    public MatchService(MatchRepository gr){
+    public MatchService(MatchRepository mr){
         this.mr=mr;
     }
     
@@ -24,14 +25,14 @@ public class MatchService {
     }
 
     @Transactional(readOnly=true)
-    public List<Match> getMatchsByName(String namepatterm){
+    public List<Match> getMatchesByName(String namepatterm){
         return mr.findAll();
     }
 
     
 
     @Transactional(readOnly=true)
-    public List<Match> getRunningMatchs(){
+    public List<Match> getRunningMatches(){
         return mr.findAll();
     }
 
@@ -39,6 +40,16 @@ public class MatchService {
     public Match save(Match m) {
         mr.save(m);
         return m;
+    }
+
+    @Transactional(readOnly=true)
+    public Optional<Match> getMatchById(Integer id) {
+        return mr.findById(id);
+    }
+
+    @Transactional
+    public void delete(Integer id) {
+        mr.deleteById(id);
     }
 
 }
