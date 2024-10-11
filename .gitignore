@@ -5,7 +5,7 @@
 .attach_pid*
 .idea
 *.iml
-
+target/*
 target/jacoco.exec
 target/*.jar
 target/*.jar.original
