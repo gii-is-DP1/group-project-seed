@@ -23,4 +23,4 @@ INSERT INTO match(id,name,code,start,finish) VALUES (1,'Fiesta para todos!!!!!',
                                                     (3,'Partida abierta ya terminada',null,'2023-04-11 18:20','2023-04-11 19:20'),
                                                     (4,'Partida abierta ya comenzada',null,'2023-04-11 18:20',null);
 
-INSERT INTO match_players(match_id, players_id) VALUES (1,4),(2,5), (2,6),(3,7),(3,8),(4,8);
+INSERT INTO match_players(match_id, players_id) VALUES (1,4),(2,5), (2,6),(3,7),(3,8),(4,6);
