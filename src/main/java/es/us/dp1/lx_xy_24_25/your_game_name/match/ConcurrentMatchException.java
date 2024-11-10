@@ -1,7 +1,11 @@
 package es.us.dp1.lx_xy_24_25.your_game_name.match;
 
-import es.us.dp1.lx_xy_24_25.your_game_name.user.User;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
+import es.us.dp1.lx_xy_24_25.your_game_name.user.User;
+import org.springframework.http.HttpStatus;
+
+@ResponseStatus(HttpStatus.BAD_REQUEST)
 public class ConcurrentMatchException extends Exception{
 
     User user;
