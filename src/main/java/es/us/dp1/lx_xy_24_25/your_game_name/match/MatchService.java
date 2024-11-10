@@ -28,7 +28,7 @@ public class MatchService {
 
     @Transactional(readOnly=true)
     public List<Match> getMatchesByName(String namepatterm){
-        return mr.findAll();
+        return mr.findByName(namepatterm);
     }
 
     
