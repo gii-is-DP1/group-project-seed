@@ -3,13 +3,15 @@ package es.us.dp1.lx_xy_24_25.your_game_name.match;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-
+import es.us.dp1.lx_xy_24_25.your_game_name.model.BaseEntity;
 import es.us.dp1.lx_xy_24_25.your_game_name.model.NamedEntity;
 import es.us.dp1.lx_xy_24_25.your_game_name.user.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Transient;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +20,10 @@ import lombok.Setter;
 @Setter
 @Entity
 @EqualsAndHashCode(of = "id")
-public class Match extends NamedEntity{
+public class Match extends BaseEntity{
+    @NotNull
+    @NotEmpty
+    String name;
     String code;
     LocalDateTime start;
     LocalDateTime finish;
