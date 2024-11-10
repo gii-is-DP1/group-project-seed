@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.us.dp1.lx_xy_24_25.your_game_name.user.User;
+
 @Service
 public class MatchService {
 
@@ -36,8 +38,15 @@ public class MatchService {
         return mr.findAll();
     }
 
-    @Transactional
-    public Match save(Match m) {
+    @Transactional(rollbackFor = {ConcurrentMatchException.class})
+    public Match save(Match m) throws ConcurrentMatchException {
+        List<Match> onGoingMatches;
+        if(m.getStatus()==MatchStatus.ONGOING)
+            for(User player:m.getPlayers()){
+                onGoingMatches=mr.findOngoingMatchesByPlayer(player);
+                if(!onGoingMatches.isEmpty() && !m.getId().equals(onGoingMatches.get(0).getId()))
+                    throw new ConcurrentMatchException(player,m,onGoingMatches.get(0));
+            }
         mr.save(m);
         return m;
     }

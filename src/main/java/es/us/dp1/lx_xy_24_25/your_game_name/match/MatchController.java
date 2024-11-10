@@ -52,7 +52,7 @@ public class MatchController {
     }
 
     @PostMapping()
-    public ResponseEntity<Match> createGame(@Valid @RequestBody Match m){
+    public ResponseEntity<Match> createGame(@Valid @RequestBody Match m) throws ConcurrentMatchException{
         m=ms.save(m);
         URI location = ServletUriComponentsBuilder
                     .fromCurrentRequest()
@@ -63,7 +63,7 @@ public class MatchController {
     }
 
     @PutMapping(value="/{id}")
-    public ResponseEntity<Void> updateGame(@Valid @RequestBody Match m,@PathVariable("id")Integer id){
+    public ResponseEntity<Void> updateGame(@Valid @RequestBody Match m,@PathVariable("id")Integer id) throws ConcurrentMatchException{
         Match mToUpdate=getMatchById(id);
         BeanUtils.copyProperties(m,mToUpdate, "id");
         ms.save(mToUpdate);
