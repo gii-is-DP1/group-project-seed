@@ -11,6 +11,6 @@ import es.us.dp1.lx_xy_24_25.your_game_name.user.User;
 public interface MatchRepository extends CrudRepository<Match, Integer> {
     List<Match> findAll();
     List<Match> findByName(String name);
-    @Query("SELECT m FROM  MATCH  m WHERE m.start<>null AND m.finish=null AND :player MEMBER OF m.players")
+    @Query("SELECT m FROM  Match  m WHERE m.start<>null AND m.finish=null AND :player MEMBER OF m.players")
     List<Match> findOngoingMatchesByPlayer(@Param("player") User player);
 }
