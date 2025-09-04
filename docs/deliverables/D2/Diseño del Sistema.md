@@ -1,4 +1,10 @@
 # Documento de diseño del sistema
+**Asignatura:** Diseño y Pruebas (Grado en Ingeniería del Software, Universidad de Sevilla)  
+**Curso académico:** <!-- p.ej., 2025/2026 -->  
+**Grupo/Equipo:** <!-- p.ej., L4-03 Equipo 33 -->  
+**Nombre del proyecto:** <!-- p. ej. Petris -->  
+**Repositorio:** <!-- URL del repo -->  
+**Integrantes (máx. 6):** <!-- Nombre Apellidos (US-Id / correo @us.es) -->
 
 _Esta es una plantilla que sirve como guía para realizar este entregable. Por favor, mantén las mismas secciones y los contenidos que se indican para poder hacer su revisión más ágil._ 
 
@@ -51,6 +57,9 @@ _En este caso hemos vuelto a usar mermaid para crear el diagrama de dominio/dise
 _En esta sección debe proporcionar un diagrama UML de clases que describa el conjunto de controladores, servicios, y repositorios implementados, incluya la división en capas del sistema como paquetes horizontales tal y como se muestra en el siguiente ejemplo:_
 
 ![your-UML-diagram-name](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/gii-is-DP1/group-project-seed/main/docs/diagrams/LayersUMLPackageDiagram.iuml)
+
+*Nota importante para el alumno*: A la hora de entregar el proyecto, debes modificar la url para que esté asociada al respositorio concreto de tu proyecto. Date cuenta de que ahora mismo apunta al repositorio _gii-is-DP1/group-project-seed_.
+
 
 _El diagrama debe especificar además las relaciones de uso entre controladores y servicios, entre servicios y servicios, y entre servicios y repositorios._
 _Tal y como se muestra en el diagrama de ejemplo, para el caso de los repositorios se deben especificar las consultas personalizadas creadas (usando la signatura de su método asociado)._

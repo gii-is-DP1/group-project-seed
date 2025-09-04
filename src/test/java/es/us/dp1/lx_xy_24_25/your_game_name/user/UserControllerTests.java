@@ -34,14 +34,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import es.us.dp1.lx_xy_24_25.your_game_name.configuration.SecurityConfiguration;
 import es.us.dp1.lx_xy_24_25.your_game_name.exceptions.ResourceNotFoundException;
-import es.us.dp1.lx_xy_24_25.your_game_name.user.AuthoritiesService;
-import es.us.dp1.lx_xy_24_25.your_game_name.user.User;
-import es.us.dp1.lx_xy_24_25.your_game_name.user.UserRestController;
-import es.us.dp1.lx_xy_24_25.your_game_name.user.UserService;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
 
 /**
  * Test class for the {@link VetController}
  */
+@Epic("Users & Admin Module")
+@Feature("Users Management")
+@Owner("DP1-tutors")
 @WebMvcTest(controllers = UserRestController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class), excludeAutoConfiguration = SecurityConfiguration.class)
 class UserControllerTests {
 

@@ -1,4 +1,5 @@
 .settings/*
+.allure/*
 .classpath
 .project
 .factorypath
@@ -24,6 +25,8 @@ target/site/*.html
 target/site/jacoco/*.csv
 target/site/jacoco/*.xml
 target/site/jacoco/jacoco-sessions.html
+target/site/allure-maven-plugin
+target/site/allure-results
 .sts4-cache/
 .vscode/*
 !.vscode/settings.json

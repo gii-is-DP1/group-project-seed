@@ -1,4 +1,10 @@
 # Documento de análisis de requisitos del sistema
+**Asignatura:** Diseño y Pruebas (Grado en Ingeniería del Software, Universidad de Sevilla)  
+**Curso académico:** <!-- p.ej., 2025/2026 -->  
+**Grupo/Equipo:** <!-- p.ej., L4-03 Equipo 33 -->  
+**Nombre del proyecto:** <!-- p. ej. Petris -->  
+**Repositorio:** <!-- URL del repo -->  
+**Integrantes (máx. 6):** <!-- Nombre Apellidos (US-Id / correo @us.es) -->
 
 _Esta es una plantilla que sirve como guía para realizar este entregable. Por favor, mantén las mismas secciones y los contenidos que se indican para poder hacer su revisión más ágil._ 
 
