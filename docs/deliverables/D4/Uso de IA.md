@@ -37,7 +37,7 @@ Riesgos relevantes y mitigaciones: <!-- síntesis -->
 
 Lecciones aprendidas: <!-- síntesis -->
 
-Checklist de cumplimiento del sprint X:
+Checklist de cumplimiento de uso ético de la IA del sprint X:
 
 - [ ] Toda interacción significativa está en el Registro Detallado con enlace a conversación.
 
@@ -47,7 +47,7 @@ Checklist de cumplimiento del sprint X:
 
 - [ ] Citas/Atribuciones incluidas cuando corresponde.
 
-- [ ] Se usó la IA si dar datos personales/sensibles que puedieran quedar expuestos a herramientas externas.
+- [ ] Se usó la IA sin dar datos personales/sensibles que puedieran quedar expuestos a herramientas externas.
 
 Repita esta subsección para Sprints 2, 3 y 4.
 
