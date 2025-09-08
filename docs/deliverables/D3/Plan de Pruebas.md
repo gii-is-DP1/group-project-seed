@@ -46,7 +46,7 @@ Las pruebas de integración se enfocarán en evaluar la interacción entre los d
 Las pruebas se ejecutarán en el entorno de desarrollo y, eventualmente, en el entorno de pruebas del servidor de integración continua.
 
 ## 5. Planificación de Pruebas
-### 5.2 Cobertura de Pruebas
+### 5.1 Cobertura de Pruebas
 
 El informe de estado de las pruebas (con trazabilidad de éstas hacia los módulos y las épicas/historias de usaurio) se encuentra [aquí](
 https://html-preview.github.io/?url=https://raw.githubusercontent.com/gii-is-DP1/group-project-seed/main/docs/deliverables/status/index.html).
