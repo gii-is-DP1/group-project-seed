@@ -49,11 +49,11 @@ Las pruebas se ejecutarán en el entorno de desarrollo y, eventualmente, en el e
 ### 5.1 Cobertura de Pruebas
 
 El informe de estado de las pruebas (con trazabilidad de éstas hacia los módulos y las épicas/historias de usaurio) se encuentra [aquí](
-https://html-preview.github.io/?url=https://raw.githubusercontent.com/gii-is-DP1/group-project-seed/main/docs/deliverables/status/index.html).
+https://html-preview.github.io/?url=https://raw.githubusercontent.com/gii-is-DP1/group-project-seed/main/docs/deliverables/D3/status/index.html).
 ### 5.2 Cobertura de Pruebas
 
 El informe de cobertura de pruebas se puede consultar [aquí](
-https://html-preview.github.io/?url=https://raw.githubusercontent.com/gii-is-DP1/group-project-seed/main/docs/deliverables/coverage/index.html).
+https://html-preview.github.io/?url=https://raw.githubusercontent.com/gii-is-DP1/group-project-seed/main/docs/deliverables/D3/coverage/index.html).
 
 
 
