@@ -53,7 +53,7 @@ public class SecurityConfiguration {
 		http
             .cors(withDefaults())
             // Si usas H2, conviene ignorar su CSRF:
-            .csrf(csrf -> csrf.ignoringRequestMatchers(PathRequest.toH2Console()))
+            .csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .headers(headers -> headers.frameOptions(frame -> frame.disable()))
             .exceptionHandling(ex -> ex.authenticationEntryPoint(unauthorizedHandler))
