@@ -36,7 +36,7 @@ function App() {
   }
 
   let adminRoutes = <></>;
-  let ownerRoutes = <></>;
+  let playerRoutes = <></>;
   let userRoutes = <></>;
   let vetRoutes = <></>;
   let publicRoutes = <></>;
@@ -50,7 +50,7 @@ function App() {
         </>)
     }
     if (role === "PLAYER") {
-      ownerRoutes = (
+      playerRoutes = (
         <>
           
         </>)
@@ -84,7 +84,7 @@ function App() {
           {publicRoutes}
           {userRoutes}
           {adminRoutes}
-          {ownerRoutes}
+          {playerRoutes}
           {vetRoutes}
         </Routes>
       </ErrorBoundary>
