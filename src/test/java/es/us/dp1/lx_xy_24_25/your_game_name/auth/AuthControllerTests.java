@@ -33,16 +33,20 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import es.us.dp1.lx_xy_24_25.your_game_name.auth.AuthController;
-import es.us.dp1.lx_xy_24_25.your_game_name.auth.AuthService;
 import es.us.dp1.lx_xy_24_25.your_game_name.auth.payload.request.SignupRequest;
 import es.us.dp1.lx_xy_24_25.your_game_name.user.UserService;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
 
 /**
- * Test class for {@link OwnerRestController}
+ * Test class for {@link AuthController}
  *
  */
 
+ @Epic("Users & Admin Module")
+ @Feature("Authentication")
+ @Owner("DP1-tutors")
 @WebMvcTest(value = AuthController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class), excludeAutoConfiguration = {
 		SecurityAutoConfiguration.class })
 class AuthControllerTests {
@@ -97,6 +101,7 @@ class AuthControllerTests {
 
 		token = "JWT TOKEN";
 	}
+
 
 	@Test
 	void shouldAuthenticateUser() throws Exception {

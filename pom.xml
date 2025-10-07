@@ -9,23 +9,24 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.3</version>
+		<version>3.5.5</version>
 	</parent>
 	<name>DP1 Game Template</name>
 
 	<properties>
-
 		<!-- Generic properties -->
-		<java.version>17</java.version>
+		<java.version>21</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<lombok.version>1.18.30</lombok.version>
+		<lombok.version>1.18.38</lombok.version>
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
 
-		<jacoco.version>0.8.8</jacoco.version>
+		<jacoco.version>0.8.13</jacoco.version>
+		<allure.version>2.29.1</allure.version>
+        <aspectj.version>1.9.21</aspectj.version>
 		<spring-format.version>0.0.19</spring-format.version>
 
 		<frontend-maven-plugin.version>1.6</frontend-maven-plugin.version>
@@ -38,8 +39,8 @@
 	<developers>
 		<developer>
 			<name>JAParejo</name>
-			<email>japarejo@gmail.com</email>
-			<url>http://www.isa.us.es</url>
+			<email>japarejo@us.es</email>
+			<url>https://github.com/japarejo</url>
 		</developer>
 	</developers>
 
@@ -112,6 +113,11 @@
 			<artifactId>junit</artifactId>
 			<groupId>junit</groupId>
 		</dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-junit5</artifactId>
+            <scope>test</scope>
+          </dependency>
 		<!-- Development tools -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -135,10 +141,10 @@
 		</dependency>
 		<!-- Swagger -->
 		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.1.0</version>
-		</dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.8.12</version>
+        </dependency>
 		<!-- Other J2EE required libraries -->
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
@@ -155,7 +161,7 @@
 			<artifactId>maven-model</artifactId>
 			<version>3.9.4</version>
 		</dependency>
-		
+
 	</dependencies>
 
 	<build>
@@ -165,7 +171,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<executions>
 					<execution>
-						<!-- Spring Boot Actuator displays build-related information if a META-INF/build-info.properties 
+						<!-- Spring Boot Actuator displays build-related information if a META-INF/build-info.properties
                         file is present -->
 						<goals>
 							<goal>build-info</goal>
@@ -182,6 +188,26 @@
 					</execution>
 				</executions>
 			</plugin>
+            <!-- Automated generation of basic tests traceability matrix -->
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.15.2</version>
+                <configuration>
+                    <singleFile>true</singleFile>
+                    <reportDirectory>${project.build.directory}/site/test-status</reportDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>allure-report</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+			<!-- Automated frontend installation validation and build -->
 			<plugin>
 				<groupId>com.github.eirslett</groupId>
 				<artifactId>frontend-maven-plugin</artifactId>
@@ -234,6 +260,7 @@
 					</execution>-->
 				</executions>
 			</plugin>
+            <!-- Jacoco plugin for code coverage calculation -->
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
@@ -253,6 +280,7 @@
 					</execution>
 				</executions>
 			</plugin>
+            <!-- Copy frontend build to output directory -->
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 				<executions>
@@ -273,19 +301,32 @@
 						</configuration>
 					</execution>
 					<execution>
-						<id>coverage-move</id>
+						<id>test-coverage-move</id>
 						<goals>
 							<goal>copy-resources</goal>
 						</goals>
 						<phase>prepare-package</phase>
 						<configuration>
-							<outputDirectory>${project.basedir}/coverage</outputDirectory>
+							<outputDirectory>${project.basedir}/docs/deliverables/D3/coverage</outputDirectory>
 							<resources>
 								<resource>
 									<directory>${project.build.directory}/site/jacoco</directory>
-									<includes>
-										<include>jacoco.xml</include>
-									</includes>
+									<filtering>false</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+                    <execution>
+						<id>test-status-move</id>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<phase>prepare-package</phase>
+						<configuration>
+							<outputDirectory>${project.basedir}/docs/deliverables/D3/status</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${project.build.directory}/site/test-status</directory>
 									<filtering>false</filtering>
 								</resource>
 							</resources>
@@ -294,7 +335,7 @@
 				</executions>
 			</plugin>
 
-			<!-- Spring Boot Actuator displays build-related information if a git.properties 
+			<!-- Spring Boot Actuator displays build-related information if a git.properties
             file is present at the classpath -->
 			<plugin>
 				<groupId>io.github.git-commit-id</groupId>
@@ -317,7 +358,8 @@
 				</configuration>
 			</plugin>
 
-
+            <!-- Maven compiler plugin configuration with mapstruct and lombok  for automated
+            code and DTO generation -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -340,9 +382,28 @@
 						</path>
 					</annotationProcessorPaths>
 				</configuration>
-			</plugin>			
+			</plugin>
+            <!-- Surefire plugin for running tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+            </plugin>
 		</plugins>
 	</build>
+
+    <!-- Add allure-bom to dependency management to ensure correct versions of all the dependencies are used -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-bom</artifactId>
+                <version>${allure.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 	<!-- Apache 2 license -->
 	<licenses>
@@ -350,5 +411,5 @@
 			<name>Apache License, Version 2.0</name>
 			<url>https://www.apache.org/licenses/LICENSE-2.0</url>
 		</license>
-	</licenses>	
+	</licenses>
 </project>

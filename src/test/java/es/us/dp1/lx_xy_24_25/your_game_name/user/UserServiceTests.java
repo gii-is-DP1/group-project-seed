@@ -12,16 +12,17 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.us.dp1.lx_xy_24_25.your_game_name.exceptions.ResourceNotFoundException;
-import es.us.dp1.lx_xy_24_25.your_game_name.user.AuthoritiesService;
-import es.us.dp1.lx_xy_24_25.your_game_name.user.User;
-import es.us.dp1.lx_xy_24_25.your_game_name.user.UserService;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
 
-//@DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
+@Epic("Users & Admin Module")
+@Feature("Users Management")
+@Owner("DP1-tutors")
 @SpringBootTest
 @AutoConfigureTestDatabase
 class UserServiceTests {
@@ -70,7 +71,7 @@ class UserServiceTests {
 
 		List<User> admins = (List<User>) this.userService.findAllByAuthority("ADMIN");
 		assertEquals(1, admins.size());
-		
+
 		List<User> vets = (List<User>) this.userService.findAllByAuthority("VET");
 		assertEquals(0, vets.size());
 	}
@@ -78,7 +79,7 @@ class UserServiceTests {
 	@Test
 	void shouldNotFindUserByIncorrectUsername() {
 		assertThrows(ResourceNotFoundException.class, () -> this.userService.findUser("usernotexists"));
-	}		
+	}
 
 	@Test
 	void shouldFindSingleUser() {
@@ -130,7 +131,7 @@ class UserServiceTests {
 		int finalCount = ((Collection<User>) this.userService.findAll()).size();
 		assertEquals(count + 1, finalCount);
 	}
-		
+
 
 //	@Test
 //	@Transactional
@@ -158,7 +159,7 @@ class UserServiceTests {
 //		assertEquals(firstCount, lastCount);
 //	}
 
-	
+
 
 //	@Test
 //	@Transactional

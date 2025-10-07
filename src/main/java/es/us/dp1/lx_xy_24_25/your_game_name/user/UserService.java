@@ -32,12 +32,12 @@ import es.us.dp1.lx_xy_24_25.your_game_name.exceptions.ResourceNotFoundException
 @Service
 public class UserService {
 
-	private UserRepository userRepository;	
+	private UserRepository userRepository;
 
 	@Autowired
 	public UserService(UserRepository userRepository) {
 		this.userRepository = userRepository;
-		
+
 	}
 
 	@Transactional
@@ -55,7 +55,7 @@ public class UserService {
 	@Transactional(readOnly = true)
 	public User findUser(Integer id) {
 		return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
-	}	
+	}
 
 	@Transactional(readOnly = true)
 	public User findCurrentUser() {
@@ -92,10 +92,8 @@ public class UserService {
 	@Transactional
 	public void deleteUser(Integer id) {
 		User toDelete = findUser(id);
-//		deleteRelations(id, toDelete.getAuthority().getAuthority());
-//		this.userRepository.deletePlayerRelation(id);
 		this.userRepository.delete(toDelete);
 	}
-	
+
 
 }

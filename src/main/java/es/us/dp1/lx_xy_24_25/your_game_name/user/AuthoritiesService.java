@@ -50,12 +50,4 @@ public class AuthoritiesService {
 		authoritiesRepository.save(authorities);
 	}
 
-//	@Transactional
-//	public void saveAuthorities(String role) throws ResourceNotFoundException {
-//		Authorities authority = new Authorities();
-//		authority.setAuthority(role);
-//		//user.get().getAuthorities().add(authority);
-//		authoritiesRepository.save(authority);
-//	}
-
 }
