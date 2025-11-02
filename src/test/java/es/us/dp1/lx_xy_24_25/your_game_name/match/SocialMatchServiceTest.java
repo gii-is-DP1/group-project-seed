@@ -42,6 +42,7 @@ public class SocialMatchServiceTest
   @Test
   public void saveWithOngoingMatchs(){
     Match m=createValidOngoingMatch();
+    m.setId(42); // Simulate existing match
     Optional<User> u=ur.findById(5);
     assumeTrue(u.isPresent());
     m.setPlayers(Set.of(u.get()));
@@ -51,8 +52,7 @@ public class SocialMatchServiceTest
 
 
   private Match createValidOngoingMatch() {
-    Match m=new Match();
-    m.setId(22);
+    Match m=new Match();    
     m.setName("Mario Party!");
     m.setStart(LocalDateTime.of(2023, 11, 11, 11,11, 11));
     return m;
