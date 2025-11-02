@@ -9,7 +9,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import es.us.dp1.lx_xy_24_25.your_game_name.exceptions.ResourceNotFoundException;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,7 +51,7 @@ public class MatchController {
     }
 
     @PostMapping()
-    public ResponseEntity<Match> createGame(@Valid @RequestBody Match m){
+    public ResponseEntity<Match> createGame(@Valid @RequestBody Match m) throws ConcurrentMatchException{
         m=ms.save(m);
         URI location = ServletUriComponentsBuilder
                     .fromCurrentRequest()
@@ -63,7 +62,7 @@ public class MatchController {
     }
 
     @PutMapping(value="/{id}")
-    public ResponseEntity<Void> updateGame(@Valid @RequestBody Match m,@PathVariable("id")Integer id){
+    public ResponseEntity<Void> updateGame(@Valid @RequestBody Match m,@PathVariable("id")Integer id) throws ConcurrentMatchException{
         Match mToUpdate=getMatchById(id);
         BeanUtils.copyProperties(m,mToUpdate, "id");
         ms.save(mToUpdate);
@@ -77,4 +76,3 @@ public class MatchController {
         return ResponseEntity.noContent().build();
     }
 }
-
