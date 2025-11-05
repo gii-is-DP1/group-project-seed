@@ -16,7 +16,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@EqualsAndHashCode(of = "id",callSuper=false)
+@EqualsAndHashCode(callSuper=false)
 @Getter
 @Setter
 public class Match extends BaseEntity {

@@ -44,7 +44,7 @@ public class MatchService {
         if(m.getStatus()==MatchStatus.ONGOING)
             for(User player:m.getPlayers()){
                 onGoingMatches=mr.findOngoingMatchesByPlayer(player);
-                if(!onGoingMatches.isEmpty() && !m.getId().equals(onGoingMatches.get(0).getId()))
+                if(!onGoingMatches.isEmpty() && !onGoingMatches.contains(m))                
                     throw new ConcurrentMatchException(player,m,onGoingMatches.get(0));
             }
         mr.save(m);
