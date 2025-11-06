@@ -28,7 +28,6 @@ import lombok.EqualsAndHashCode;
  * @author Juergen Hoeller
  */
 @MappedSuperclass
-@EqualsAndHashCode(callSuper = true)
 public class NamedEntity extends BaseEntity {
 
     @Size(min = 3, max = 50)

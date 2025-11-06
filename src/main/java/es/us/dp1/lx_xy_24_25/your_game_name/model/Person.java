@@ -27,7 +27,6 @@ import lombok.EqualsAndHashCode;
  */
 
  @MappedSuperclass
- @EqualsAndHashCode(callSuper= true)	
 public class Person extends BaseEntity {
 
 	@Column(name = "first_name")

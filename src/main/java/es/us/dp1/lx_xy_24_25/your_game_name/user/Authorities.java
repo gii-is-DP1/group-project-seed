@@ -12,7 +12,6 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "authorities")
-@EqualsAndHashCode(callSuper = true)
 public class Authorities extends BaseEntity{
 	
 //	@ManyToOne
