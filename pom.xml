@@ -3,7 +3,7 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>es.us.dp1</groupId>
-	<artifactId>PVM4816-2425-PVM4816</artifactId>
+	<artifactId>PVM4816-2425-PVM481</artifactId>
 	<version>0.1.0.BUILD-SNAPSHOT</version>
 
 	<parent>
