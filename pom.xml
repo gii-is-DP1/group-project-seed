@@ -42,6 +42,15 @@
 			<email>japarejo@us.es</email>
 			<url>https://github.com/japarejo</url>
 		</developer>
+		<developer>
+			<id>marcosre</id>
+			<name>Marcos</name>
+			<email>marrealan@alum.us.es</email>
+			<url>https://github.com/marcosre05</url>
+			<roles>
+				<role>leader</role>
+			</roles>
+		</developer>
 	</developers>
 
 	<dependencies>
