@@ -13,7 +13,7 @@ import tokenService from "./services/token.service";
 import UserListAdmin from "./admin/users/UserListAdmin";
 import UserEditAdmin from "./admin/users/UserEditAdmin";
 import SwaggerDocs from "./public/swagger";
-
+import DeveloperList from "./developers";
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
     <div role="alert">
@@ -69,7 +69,7 @@ function App() {
         {/* <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} /> */}        
         <Route path="/logout" element={<Logout />} />
         <Route path="/login" element={<Login />} />
-      </>
+      <Route path="/developers" element={<DeveloperList />} /></>
     )
   }
 
