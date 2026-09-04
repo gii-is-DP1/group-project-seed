@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Navbar, NavbarBrand, NavLink, NavItem, Nav, NavbarText, NavbarToggler, Collapse } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import tokenService from './services/token.service';
-import jwt_decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 function AppNavbar() {
     const [roles, setRoles] = useState([]);
@@ -14,8 +14,8 @@ function AppNavbar() {
 
     useEffect(() => {
         if (jwt) {
-            setRoles(jwt_decode(jwt).authorities);
-            setUsername(jwt_decode(jwt).sub);
+            setRoles(jwtDecode(jwt).authorities);
+            setUsername(jwtDecode(jwt).sub);
         }
     }, [jwt])
 

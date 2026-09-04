@@ -12,7 +12,7 @@
 To install them all, run:
 
 ```
-yarn add filepond@4.30.4 filepond-plugin-file-encode@2.1.10 filepond-plugin-image-exif-orientation@1.0.11 filepond-plugin-image-preview@4.6.11 react-filepond@7.1.2
+npm install filepond@4.32.12 filepond-plugin-file-encode@2.1.14 filepond-plugin-image-exif-orientation@1.0.11 filepond-plugin-image-preview@4.6.12 react-filepond@7.1.3
 ```
 
 Form Generator is a react component that symplifies the forms' creation task.

@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import jwt_decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import { ErrorBoundary } from "react-error-boundary";
 import AppNavbar from "./AppNavbar";
 import Home from "./home";
@@ -32,7 +32,7 @@ function App() {
   }
 
   function getRolesFromJWT(jwt) {
-    return jwt_decode(jwt).authorities;
+    return jwtDecode(jwt).authorities;
   }
 
   let adminRoutes = <></>;
