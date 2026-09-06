@@ -93,3 +93,8 @@ _site/
 coverage/jacoco.xml
 .gitignore
 !frontend/package-lock.json
+
+# Local H2 database files
+/data/
+*.mv.db
+*.trace.db
