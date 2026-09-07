@@ -28,6 +28,10 @@ target/site/jacoco/*.xml
 target/site/jacoco/jacoco-sessions.html
 target/site/allure-maven-plugin
 target/site/allure-results
+
+# Reporte de cobertura JaCoCo copiado a docs/deliverables (generado por mvn install)
+docs/deliverables/D3/coverage/
+
 .sts4-cache/
 .vscode/*
 !.vscode/settings.json
