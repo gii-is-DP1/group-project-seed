@@ -20,7 +20,7 @@ function AppNavbar() {
     }, [jwt])
 
     let adminLinks = <></>;
-    let ownerLinks = <></>;
+    let playerLinks = <></>;
     let userLinks = <></>;
     let userLogout = <></>;
     let publicLinks = <></>;
@@ -84,14 +84,14 @@ function AppNavbar() {
             <Navbar expand="md" dark color="dark">
                 <NavbarBrand href="/">
                     <img alt="logo" src="/logo1-recortado.png" style={{ height: 40, width: 40 }} />
-                    Your Game
+                    My Game - DP1
                 </NavbarBrand>
                 <NavbarToggler onClick={toggleNavbar} className="ms-2" />
                 <Collapse isOpen={!collapsed} navbar>
                     <Nav className="me-auto mb-2 mb-lg-0" navbar>
                         {userLinks}
                         {adminLinks}
-                        {ownerLinks}
+                        {playerLinks}
                     </Nav>
                     <Nav className="ms-auto mb-2 mb-lg-0" navbar>
                         {publicLinks}
