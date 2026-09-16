@@ -195,7 +195,7 @@ class UserControllerTests {
 
 		mockMvc.perform(put(BASE_URL + "/{id}", TEST_USER_ID).with(csrf()).contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(user))).andExpect(status().isOk())
-				.andExpect(jsonPath("$.username").value("UPDATED")).andExpect(jsonPath("$.password").value("CHANGED"));
+				.andExpect(jsonPath("$.username").value("UPDATED")).andExpect(jsonPath("$.password").doesNotExist());
 	}
 
 	@Test

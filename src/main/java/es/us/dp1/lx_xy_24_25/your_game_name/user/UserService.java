@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,15 +34,18 @@ import es.us.dp1.lx_xy_24_25.your_game_name.exceptions.ResourceNotFoundException
 public class UserService {
 
 	private UserRepository userRepository;
+	private PasswordEncoder passwordEncoder;
 
 	@Autowired
-	public UserService(UserRepository userRepository) {
+	public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
 		this.userRepository = userRepository;
+		this.passwordEncoder = passwordEncoder;
 
 	}
 
 	@Transactional
 	public User saveUser(User user) throws DataAccessException {
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userRepository.save(user);
 		return user;
 	}
@@ -83,7 +87,10 @@ public class UserService {
 	@Transactional
 	public User updateUser(@Valid User user, Integer idToUpdate) {
 		User toUpdate = findUser(idToUpdate);
-		BeanUtils.copyProperties(user, toUpdate, "id");
+		BeanUtils.copyProperties(user, toUpdate, "id", "password");
+		if (user.getPassword() != null && !user.getPassword().isBlank()) {
+			toUpdate.setPassword(passwordEncoder.encode(user.getPassword()));
+		}
 		userRepository.save(toUpdate);
 
 		return toUpdate;

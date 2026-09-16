@@ -75,11 +75,11 @@ export default function UserEditAdmin() {
           </div>
           <div className="custom-form-input">
             <Label for="lastName" className="custom-form-input-label">
-              Password
+              Password{user.id ? " (leave blank to keep unchanged)" : ""}
             </Label>
             <Input
               type="password"
-              required
+              required={!user.id}
               name="password"
               id="password"
               value={user.password || ""}
