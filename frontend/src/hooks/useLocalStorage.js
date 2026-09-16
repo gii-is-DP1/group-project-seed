@@ -12,10 +12,10 @@ import React from "react";
  *   - `setValue`: A function to update the state value. When called, it also updates the value in `localStorage`.
  *
  * @example
- * const [name, setName] = useLocalState('name', 'Guest');
+ * const [name, setName] = useLocalStorage('name', 'Guest');
  */
 
-function useLocalState(key, defaultValue){
+function useLocalStorage(key, defaultValue){
     const [value,setValue] = React.useState(()=> {
         const stickyValue = window.localStorage.getItem(key);
 
@@ -31,4 +31,4 @@ function useLocalState(key, defaultValue){
     return [value,setValue];
 }
 
-export {useLocalState}
+export {useLocalStorage}

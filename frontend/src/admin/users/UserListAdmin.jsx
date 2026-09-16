@@ -1,24 +1,17 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, ButtonGroup, Table } from "reactstrap";
-import tokenService from "../../services/token.service";
+import * as usersApi from "../../services/users";
 import "../../static/css/admin/adminPage.css";
 import deleteFromList from "../../util/deleteFromList";
-import getErrorModal from "../../util/getErrorModal";
-import useFetchState from "../../util/useFetchState";
-
-const jwt = tokenService.getLocalAccessToken();
+import useErrorModal from "../../hooks/useErrorModal";
+import useFetchState from "../../hooks/useFetchState";
 
 export default function UserListAdmin() {
-  const [message, setMessage] = useState(null);
-  const [visible, setVisible] = useState(false);
-  const [users, setUsers] = useFetchState(
-    [],
-    `/api/v1/users`,
-    jwt,
-    setMessage,
-    setVisible
-  );
+  const { errorModal, showError } = useErrorModal();
+  const [users, setUsers] = useFetchState([], usersApi.getAllUsers, [], {
+    onError: showError,
+  });
   const [alerts, setAlerts] = useState([]);
 
   const userList = users.map((user) => {
@@ -43,12 +36,11 @@ export default function UserListAdmin() {
               aria-label={"delete-" + user.id}
               onClick={() =>
                 deleteFromList(
-                  `/api/v1/users/${user.id}`,
+                  usersApi.deleteUser,
                   user.id,
                   [users, setUsers],
                   [alerts, setAlerts],
-                  setMessage,
-                  setVisible
+                  { onError: showError }
                 )
               }
             >
@@ -59,13 +51,12 @@ export default function UserListAdmin() {
       </tr>
     );
   });
-  const modal = getErrorModal(setVisible, visible, message);
 
   return (
     <div className="admin-page-container">
       <h1 className="text-center">Users</h1>
       {alerts.map((a) => a.alert)}
-      {modal}
+      {errorModal}
       <Button color="success" tag={Link} to="/users/new">
         Add User
       </Button>

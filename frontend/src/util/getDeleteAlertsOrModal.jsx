@@ -21,17 +21,15 @@ function dismiss(alerts, id, setAlerts) {
  * @param {string} id - A unique identifier for the alert.
  * @param {Array} alerts - The current list of alerts being displayed.
  * @param {function} setAlerts - A function to update the list of alerts.
- * @param {function} setMessage - A function to set the message for the modal.
- * @param {function} setVisible - A function to control the visibility of the modal.
+ * @param {function(string): void} onError - Called with the error message when the response carries a status code.
  *
  * @example
- * getDeleteAlertsOrModal(responseJson, "123", currentAlerts, setCurrentAlerts, setModalMessage, setModalVisible);
+ * getDeleteAlertsOrModal(responseJson, "123", currentAlerts, setCurrentAlerts, showError);
  */
 
-export default function getDeleteAlertsOrModal(json, id, alerts, setAlerts, setMessage, setVisible) {
+export default function getDeleteAlertsOrModal(json, id, alerts, setAlerts, onError) {
     if (json.statusCode) {
-        setMessage(json.message);
-        setVisible(true);
+        onError(json.message);
     }
     else {
         const alertId = `alert-${id}`
