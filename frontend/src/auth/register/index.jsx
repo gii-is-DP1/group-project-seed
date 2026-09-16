@@ -4,14 +4,12 @@ import * as authApi from "../../services/auth";
 import tokenService from "../../services/token.service";
 import FormGenerator from "../../components/formGenerator/formGenerator";
 import { registerFormOwnerInputs } from "./form/registerFormOwnerInputs";
-import { registerFormVetInputs } from "./form/registerFormVetInputs";
 import { registerFormClinicOwnerInputs } from "./form/registerFormClinicOwnerInputs";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 export default function Register() {
   let [type, setType] = useState(null);
   let [authority, setAuthority] = useState(null);
-  let [clinics, setClinics] = useState([]);
 
   const registerFormRef = useRef();
 
@@ -74,18 +72,18 @@ export default function Register() {
           <div className="options-row">
             <button
               className="auth-button"
-              value="Owner"
+              value="Player"
               onClick={handleButtonClick}
             >
               Player
             </button>
             <button
               className="auth-button"
-              value="Vet"
+              value="Admin"
               onClick={handleButtonClick}
             >
               Admin
-            </button>            
+            </button>
           </div>
         </div>
       </div>
