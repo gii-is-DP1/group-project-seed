@@ -1,23 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Navbar, NavbarBrand, NavLink, NavItem, Nav, NavbarText, NavbarToggler, Collapse } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import tokenService from './services/token.service';
-import { jwtDecode } from "jwt-decode";
+import useAuth from './hooks/useAuth';
 
 function AppNavbar() {
-    const [roles, setRoles] = useState([]);
-    const [username, setUsername] = useState("");
-    const jwt = tokenService.getLocalAccessToken();
+    const { jwt, roles, username } = useAuth();
     const [collapsed, setCollapsed] = useState(true);
 
     const toggleNavbar = () => setCollapsed(!collapsed);
-
-    useEffect(() => {
-        if (jwt) {
-            setRoles(jwtDecode(jwt).authorities);
-            setUsername(jwtDecode(jwt).sub);
-        }
-    }, [jwt])
 
     let adminLinks = <></>;
     let ownerLinks = <></>;
@@ -30,7 +20,7 @@ function AppNavbar() {
             adminLinks = (
                 <>                    
                     <NavItem>
-                        <NavLink style={{ color: "white" }} tag={Link} to="/users">Users</NavLink>
+                        <NavLink className="nav-link-white" tag={Link} to="/users">Users</NavLink>
                     </NavItem>
                 </>
             )
@@ -41,16 +31,16 @@ function AppNavbar() {
         publicLinks = (
             <>
                 <NavItem>
-                    <NavLink style={{ color: "white" }} id="docs" tag={Link} to="/docs">Docs</NavLink>
+                    <NavLink className="nav-link-white" id="docs" tag={Link} to="/docs">Docs</NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink style={{ color: "white" }} id="plans" tag={Link} to="/plans">Pricing Plans</NavLink>
+                    <NavLink className="nav-link-white" id="plans" tag={Link} to="/plans">Pricing Plans</NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink style={{ color: "white" }} id="register" tag={Link} to="/register">Register</NavLink>
+                    <NavLink className="nav-link-white" id="register" tag={Link} to="/register">Register</NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink style={{ color: "white" }} id="login" tag={Link} to="/login">Login</NavLink>
+                    <NavLink className="nav-link-white" id="login" tag={Link} to="/login">Login</NavLink>
                 </NavItem>
             </>
         )
@@ -58,21 +48,21 @@ function AppNavbar() {
         userLinks = (
             <>
                 <NavItem>
-                    <NavLink style={{ color: "white" }} tag={Link} to="/dashboard">Dashboard</NavLink>
+                    <NavLink className="nav-link-white" tag={Link} to="/dashboard">Dashboard</NavLink>
                 </NavItem>
             </>
         )
         userLogout = (
             <>
                 <NavItem>
-                    <NavLink style={{ color: "white" }} id="docs" tag={Link} to="/docs">Docs</NavLink>
+                    <NavLink className="nav-link-white" id="docs" tag={Link} to="/docs">Docs</NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink style={{ color: "white" }} id="plans" tag={Link} to="/plans">Pricing Plans</NavLink>
+                    <NavLink className="nav-link-white" id="plans" tag={Link} to="/plans">Pricing Plans</NavLink>
                 </NavItem>
-                <NavbarText style={{ color: "white" }} className="justify-content-end">{username}</NavbarText>
+                <NavbarText className="nav-link-white justify-content-end">{username}</NavbarText>
                 <NavItem className="d-flex">
-                    <NavLink style={{ color: "white" }} id="logout" tag={Link} to="/logout">Logout</NavLink>
+                    <NavLink className="nav-link-white" id="logout" tag={Link} to="/logout">Logout</NavLink>
                 </NavItem>
             </>
         )

@@ -1,8 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Form, Input, Label } from "reactstrap";
 import * as usersApi from "../../services/users";
 import "../../static/css/admin/adminPage.css";
-import getIdFromUrl from "../../util/getIdFromUrl";
 import useErrorModal from "../../hooks/useErrorModal";
 import useFetchState from "../../hooks/useFetchState";
 
@@ -13,7 +12,8 @@ export default function UserEditAdmin() {
     password: "",
     authority: null,
   };
-  const id = getIdFromUrl(2);
+  const { id } = useParams();
+  const navigate = useNavigate();
   const { errorModal, showError } = useErrorModal();
   const [user, setUser] = useFetchState(
     emptyItem,
@@ -41,7 +41,7 @@ export default function UserEditAdmin() {
     try {
       if (user.id) await usersApi.updateUser(user.id, user);
       else await usersApi.createUser(user);
-      window.location.href = "/users";
+      navigate("/users");
     } catch (err) {
       showError(err.response?.data?.message ?? "Error saving user");
     }

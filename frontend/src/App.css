@@ -41,3 +41,7 @@
 .NavbarBrand {
   margin-left: 20px;
 }
+
+.nav-link-white {
+  color: white;
+}

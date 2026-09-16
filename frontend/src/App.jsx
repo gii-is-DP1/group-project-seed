@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 import { ErrorBoundary } from "react-error-boundary";
 import AppNavbar from "./AppNavbar";
 import Home from "./home";
@@ -9,7 +8,7 @@ import Register from "./auth/register";
 import Login from "./auth/login";
 import Logout from "./auth/logout";
 import PlanList from "./public/plan";
-import tokenService from "./services/token.service";
+import useAuth from "./hooks/useAuth";
 import UserListAdmin from "./admin/users/UserListAdmin";
 import UserEditAdmin from "./admin/users/UserEditAdmin";
 import SwaggerDocs from "./public/swagger";
@@ -25,15 +24,7 @@ function ErrorFallback({ error, resetErrorBoundary }) {
 }
 
 function App() {
-  const jwt = tokenService.getLocalAccessToken();
-  let roles = []
-  if (jwt) {
-    roles = getRolesFromJWT(jwt);
-  }
-
-  function getRolesFromJWT(jwt) {
-    return jwtDecode(jwt).authorities;
-  }
+  const { jwt, roles } = useAuth();
 
   let adminRoutes = <></>;
   let playerRoutes = <></>;
@@ -45,7 +36,7 @@ function App() {
       adminRoutes = (
         <>
           <Route path="/users" exact={true} element={<PrivateRoute><UserListAdmin /></PrivateRoute>} />
-          <Route path="/users/:username" exact={true} element={<PrivateRoute><UserEditAdmin /></PrivateRoute>} />          
+          <Route path="/users/:id" exact={true} element={<PrivateRoute><UserEditAdmin /></PrivateRoute>} />
         </>)
     }
     if (role === "PLAYER") {

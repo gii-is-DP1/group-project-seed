@@ -49,8 +49,6 @@ const FormGenerator = forwardRef(({
           let input = props.inputs[i];
           for (let validator of input.validators) {
             if (!validator.validate(formValues[input.name])) {
-              console.log(input);
-              console.log(formValues[input.name])
               formInputs.current[i].setErrors([validator.message]);
               isValid = false;
             }
@@ -130,12 +128,17 @@ const FormGenerator = forwardRef(({
   }, [submitForm]);
 
   useEffect(() => {
-    document.addEventListener("keyup", (e) => {
+    function handleKeyUp(e) {
       if (e.key === "Enter" && props.listenEnterKey) {
         handleSubmit(e);
       }
-    });
-  }, []);
+    }
+
+    document.addEventListener("keyup", handleKeyUp);
+    return () => {
+      document.removeEventListener("keyup", handleKeyUp);
+    };
+  }, [props.listenEnterKey, handleSubmit]);
 
   return (
     <div className="class-profile-form">

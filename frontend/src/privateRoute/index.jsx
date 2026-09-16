@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import tokenService from '../services/token.service';
+import useAuth from '../hooks/useAuth';
 import * as authApi from '../services/auth';
 import Login from '../auth/login';
 
 const PrivateRoute = ({ children }) => {
-    const jwt = tokenService.getLocalAccessToken();
+    const { jwt } = useAuth();
     const [isLoading, setIsLoading] = useState(true);
     const [isValid, setIsValid] = useState(null);
 
