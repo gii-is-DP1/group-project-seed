@@ -91,33 +91,19 @@ export default function UserEditAdmin() {
             Authority
           </Label>
           <div className="custom-form-input">
-            {user.id ? (
-              <Input
-                type="select"
-                disabled
-                name="authority"
-                id="authority"
-                value={user.authority?.id || ""}
-                onChange={handleChange}
-                className="custom-input"
-              >
-                <option value="">None</option>
-                {authOptions}
-              </Input>
-            ) : (
-              <Input
-                type="select"
-                required
-                name="authority"
-                id="authority"
-                value={user.authority?.id || ""}
-                onChange={handleChange}
-                className="custom-input"
-              >
-                <option value="">None</option>
-                {authOptions}
-              </Input>
-            )}
+            <Input
+              type="select"
+              disabled={!!user.id}
+              required={!user.id}
+              name="authority"
+              id="authority"
+              value={user.authority?.id || ""}
+              onChange={handleChange}
+              className="custom-input"
+            >
+              <option value="">None</option>
+              {authOptions}
+            </Input>
           </div>
           <div className="custom-button-row">
             <button className="auth-button">Save</button>
