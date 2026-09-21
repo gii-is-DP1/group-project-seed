@@ -31,6 +31,7 @@ target/site/allure-results
 
 # Reporte de cobertura JaCoCo copiado a docs/deliverables (generado por mvn install)
 docs/deliverables/D3/coverage/
+docs/deliverables/D3/status/
 
 .sts4-cache/
 .vscode/*
