@@ -13,6 +13,8 @@ import UserListAdmin from "./admin/users/UserListAdmin";
 import UserEditAdmin from "./admin/users/UserEditAdmin";
 import SwaggerDocs from "./public/swagger";
 import DeveloperContainer from "./developers";
+import AchievementList from "./achievements/AchievementList";
+import AchievementEdit from "./achievements/AchievementEdit";
 
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
@@ -44,7 +46,9 @@ function App() {
     if (role === "PLAYER") {
       playerRoutes = (
         <>
-          
+          <Route path="/achievements/" exact={true} element={<PrivateRoute><AchievementList /></PrivateRoute>} />
+          <Route path="/achievements/:id" exact={true} element={<PrivateRoute><AchievementEdit /></PrivateRoute>} />
+
         </>)
     }    
   })
