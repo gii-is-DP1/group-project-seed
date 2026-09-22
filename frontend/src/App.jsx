@@ -12,6 +12,7 @@ import useAuth from "./hooks/useAuth";
 import UserListAdmin from "./admin/users/UserListAdmin";
 import UserEditAdmin from "./admin/users/UserEditAdmin";
 import SwaggerDocs from "./public/swagger";
+import DeveloperContainer from "./developers";
 
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
@@ -37,6 +38,7 @@ function App() {
         <>
           <Route path="/users" exact={true} element={<PrivateRoute><UserListAdmin /></PrivateRoute>} />
           <Route path="/users/:id" exact={true} element={<PrivateRoute><UserEditAdmin /></PrivateRoute>} />
+          <Route path="/developers" element={<DeveloperContainer />} />
         </>)
     }
     if (role === "PLAYER") {

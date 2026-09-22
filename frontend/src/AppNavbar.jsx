@@ -22,6 +22,9 @@ function AppNavbar() {
                     <NavItem>
                         <NavLink className="nav-link-white" tag={Link} to="/users">Users</NavLink>
                     </NavItem>
+                    <NavItem>
+                        <NavLink className="nav-link-white" tag={Link} to="/developers">Developers</NavLink>
+                    </NavItem>
                 </>
             )
         }        
