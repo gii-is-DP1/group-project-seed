@@ -68,6 +68,13 @@ public class SecurityConfiguration {
                 // Raíz / páginas públicas
                 .requestMatchers("/", "/oups").permitAll()
 
+                // Frontend empaquetado en el JAR (mvnw package -Pfrontend): index.html, /assets/**,
+                // imágenes y rutas de React Router (las reenvía SpaForwardingController).
+                // Cualquier GET que no sea de la API ni del actuator es público.
+                .requestMatchers(request -> HttpMethod.GET.matches(request.getMethod())
+                        && !request.getRequestURI().startsWith(request.getContextPath() + "/api/")
+                        && !request.getRequestURI().startsWith(request.getContextPath() + "/actuator")).permitAll()
+
                 // Swagger / OpenAPI accesible
                 .requestMatchers(
                     "/v3/api-docs/**",

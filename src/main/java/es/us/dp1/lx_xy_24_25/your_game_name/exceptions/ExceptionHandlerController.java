@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @RestControllerAdvice
 public class ExceptionHandlerController {
@@ -24,6 +25,15 @@ public class ExceptionHandlerController {
 				request.getDescription(false));
 
 		return new ResponseEntity<>(message, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	// Static file that does not exist (e.g. /assets/missing.js): 404 instead of 500
+	@ExceptionHandler(NoResourceFoundException.class)
+	@ResponseStatus(value = HttpStatus.NOT_FOUND)
+	public ResponseEntity<ErrorMessage> noResourceFoundException(NoResourceFoundException ex, WebRequest request) {
+		ErrorMessage message = new ErrorMessage(HttpStatus.NOT_FOUND.value(), new Date(), ex.getMessage(),
+				request.getDescription(false));
+		return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
 	}
 
 	@ExceptionHandler(ResourceNotFoundException.class)
