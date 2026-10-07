@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import es.us.dp1.lx_xy_26_27.your_game_name.model.NamedEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,5 +34,15 @@ public class Match extends NamedEntity {
     @NotBlank
     public String getName() {
         return super.getName();
+    }
+
+    // Derived property: it is serialized in the JSON responses but not stored in the DB
+    @Transient
+    public MatchStatus getStatus() {
+        if (start == null)
+            return MatchStatus.WAITING;
+        if (finish == null)
+            return MatchStatus.PLAYING;
+        return MatchStatus.FINISHED;
     }
 }
