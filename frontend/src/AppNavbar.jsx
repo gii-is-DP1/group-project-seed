@@ -50,6 +50,9 @@ function AppNavbar() {
                 <NavItem>
                     <NavLink className="nav-link-white" tag={Link} to="/dashboard">Dashboard</NavLink>
                 </NavItem>
+                <NavItem>
+                    <NavLink className="nav-link-white" id="matches" tag={Link} to="/matches">Matches</NavLink>
+                </NavItem>
             </>
         )
         userLogout = (

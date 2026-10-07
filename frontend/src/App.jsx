@@ -12,6 +12,7 @@ import useAuth from "./hooks/useAuth";
 import UserListAdmin from "./admin/users/UserListAdmin";
 import UserEditAdmin from "./admin/users/UserEditAdmin";
 import SwaggerDocs from "./public/swagger";
+import MatchList from "./match/MatchList";
 
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
@@ -57,6 +58,7 @@ function App() {
     userRoutes = (
       <>
         {/* <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} /> */}        
+        <Route path="/matches" element={<PrivateRoute><MatchList /></PrivateRoute>} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/login" element={<Login />} />
       </>
