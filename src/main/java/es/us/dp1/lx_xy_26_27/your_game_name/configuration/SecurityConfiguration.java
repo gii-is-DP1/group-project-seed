@@ -91,6 +91,9 @@ public class SecurityConfiguration {
                 // API restringida para administradores
                 .requestMatchers("/api/v1/users/**").hasAuthority(ADMIN)
 
+                // API de partidas: jugadores y administradores autenticados
+                .requestMatchers("/api/v1/matches/**").hasAnyAuthority(PLAYER, ADMIN)
+
                 // El resto denegado
                 .anyRequest().denyAll()
             )
