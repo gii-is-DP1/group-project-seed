@@ -43,9 +43,15 @@ public class UserService {
 
 	}
 
+	/**
+	 * Saves a user. The password of a new user is received in plain text and encoded here.
+	 * An existing user already stores the encoded password, so it is not encoded again
+	 * (re-saving a user must not change its password); use updateUser to change it.
+	 */
 	@Transactional
 	public User saveUser(User user) throws DataAccessException {
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		if (user.isNew())
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userRepository.save(user);
 		return user;
 	}
