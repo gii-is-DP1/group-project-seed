@@ -24,30 +24,26 @@ public class MatchService {
     }
 
     // Business need of the lobby: find matches by (part of) their name.
-    // Dummy implementation for now: it will be implemented with a query method later.
     @Transactional(readOnly = true)
     public List<Match> getMatchesByName(String namePattern) {
-        return matchRepository.findAll();
+        return matchRepository.findByNameContainingIgnoreCase(namePattern);
     }
 
     // Business need of the lobby: matches waiting for players (they can be joined)
-    // Dummy implementation for now.
     @Transactional(readOnly = true)
     public List<Match> getWaitingMatches() {
-        return matchRepository.findAll();
+        return matchRepository.findByStartIsNull();
     }
 
     // Business need of the lobby: matches being played (they can be watched as a spectator)
-    // Dummy implementation for now.
     @Transactional(readOnly = true)
     public List<Match> getPlayingMatches() {
-        return matchRepository.findAll();
+        return matchRepository.findByStartIsNotNullAndFinishIsNull();
     }
 
-    // Dummy implementation for now.
     @Transactional(readOnly = true)
     public List<Match> getFinishedMatches() {
-        return matchRepository.findAll();
+        return matchRepository.findByFinishIsNotNull();
     }
 
     @Transactional(readOnly = true)
