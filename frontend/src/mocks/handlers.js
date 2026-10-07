@@ -158,6 +158,24 @@ const ticket2 = {
     "consultation": consultation1
 }
 
+const match1 = {
+    "id": 1,
+    "name": "Fiesta para todos",
+    "code": null,
+    "start": null,
+    "finish": null,
+    "status": "WAITING"
+};
+
+const match2 = {
+    "id": 3,
+    "name": "Partida privada ya comenzada",
+    "code": "1234",
+    "start": "2026-10-01T16:00:00",
+    "finish": null,
+    "status": "PLAYING"
+};
+
 export const handlers = [
     http.delete('*/:id', () => HttpResponse.json({ message: "Entity deleted" })),
 
@@ -166,6 +184,12 @@ export const handlers = [
     http.get('*/api/v1/pets', () => HttpResponse.json([pet1, pet2])),
 
     http.get('*/api/v1/users', () => HttpResponse.json([userAdmin1, userOwner1])),
+
+    http.get('*/api/v1/matches', ({ request }) => {
+        const status = new URL(request.url).searchParams.get('status');
+        const matches = [match1, match2];
+        return HttpResponse.json(status ? matches.filter((m) => m.status === status) : matches);
+    }),
 
     http.get('*/api/v1/vets', () => HttpResponse.json([vet1, vet2])),
 
