@@ -189,14 +189,14 @@ To generate a single application containing both the backend and frontend:
 
 ```bash
 ./mvnw clean package -Pfrontend
-java -jar target/lx-xy-2425-game-name-0.1.0.BUILD-SNAPSHOT.jar
+java -jar target/lx-xy-2627-game-name-0.1.0.BUILD-SNAPSHOT.jar
 ```
 
 On Windows PowerShell:
 
 ```powershell
 .\mvnw.cmd clean package -Pfrontend
-java -jar target/lx-xy-2425-game-name-0.1.0.BUILD-SNAPSHOT.jar
+java -jar target/lx-xy-2627-game-name-0.1.0.BUILD-SNAPSHOT.jar
 ```
 
 Vite first generates `frontend/dist/`. Maven copies its contents into
@@ -306,7 +306,7 @@ without committing the real value to Git.
 ```
 
 The backend entry point is
-`src/main/java/es/us/dp1/lx_xy_24_25/your_game_name/GameApplication.java`. The
+`src/main/java/es/us/dp1/lx_xy_26_27/your_game_name/GameApplication.java`. The
 frontend entry point is `frontend/src/index.jsx`.
 
 ## IDE configuration
