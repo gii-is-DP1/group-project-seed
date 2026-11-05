@@ -17,9 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.us.dp1.lx_xy_24_25.your_game_name.user.User;
 import es.us.dp1.lx_xy_24_25.your_game_name.user.UserService;
+import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
+import io.qameta.allure.Story;
 
 import es.us.dp1.lx_xy_24_25.your_game_name.testing.ControllerTest;
 import es.us.dp1.lx_xy_24_25.your_game_name.testing.SociableTest;
@@ -49,6 +51,9 @@ class SignupAndLoginTests {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Story("HU-02: Registrar usuario")
+    @Story("HU-01: Iniciar sesión")
+    @Description("Un usuario recién registrado puede iniciar sesión con su contraseña.")
     @Test
     void registeredUserCanLogIn() throws Exception {
         mockMvc.perform(post("/api/v1/auth/signup").contentType(MediaType.APPLICATION_JSON).content("""
@@ -64,6 +69,8 @@ class SignupAndLoginTests {
                 .andExpect(jsonPath("$.token").isNotEmpty());
     }
 
+    @Story("HU-02: Registrar usuario")
+    @Description("Al registrarse, la contraseña se guarda codificada una sola vez.")
     @Test
     void passwordIsEncodedOnlyOnceOnSignup() throws Exception {
         mockMvc.perform(post("/api/v1/auth/signup").contentType(MediaType.APPLICATION_JSON).content("""
