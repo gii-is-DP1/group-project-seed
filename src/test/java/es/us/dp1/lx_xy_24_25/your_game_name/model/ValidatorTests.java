@@ -17,6 +17,9 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
 
+import es.us.dp1.lx_xy_24_25.your_game_name.testing.IsolatedTest;
+import es.us.dp1.lx_xy_24_25.your_game_name.testing.ModelTest;
+
 /**
  * @author Michael Isvy Simple test to make sure that Bean Validation is working (useful
  * when upgrading to a new version of Hibernate Validator/ Bean Validation)
@@ -24,6 +27,8 @@ import io.qameta.allure.Owner;
 @Epic("Miscelaneous tets")
 @Feature("Validation")
 @Owner("DP1-tutors")
+@ModelTest
+@IsolatedTest
 class ValidatorTests {
 
 	private Validator createValidator() {

@@ -17,9 +17,14 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
 
+import es.us.dp1.lx_xy_24_25.your_game_name.testing.ServiceTest;
+import es.us.dp1.lx_xy_24_25.your_game_name.testing.SociableTest;
+
 @Epic("Users & Admin Module")
 @Feature("Authentication")
 @Owner("DP1-tutors")
+@ServiceTest
+@SociableTest
 @SpringBootTest
 public class AuthServiceTests {
 

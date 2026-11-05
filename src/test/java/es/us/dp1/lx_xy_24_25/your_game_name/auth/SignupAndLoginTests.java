@@ -21,6 +21,9 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
 
+import es.us.dp1.lx_xy_24_25.your_game_name.testing.ControllerTest;
+import es.us.dp1.lx_xy_24_25.your_game_name.testing.SociableTest;
+
 /**
  * Regression tests: the password of a registered user must be encoded exactly once,
  * so that the user can log in with the password used to register.
@@ -28,6 +31,8 @@ import io.qameta.allure.Owner;
 @Epic("Users & Admin Module")
 @Feature("Authentication")
 @Owner("DP1-tutors")
+@ControllerTest
+@SociableTest
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
