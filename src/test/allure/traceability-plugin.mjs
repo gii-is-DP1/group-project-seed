@@ -13,6 +13,7 @@
 //   output        Markdown file to write (default: traceability.md inside the report).
 //   requirements  Markdown file with the user stories (optional).
 //   sourceRoot    Root of the test sources, used to link each test to its file (optional).
+//   storyPrefix   Prefix of the user story ids, "HU" by default (HU-01, HU-02...).
 
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, isAbsolute, join, relative } from "node:path";
@@ -44,10 +45,21 @@ const cell = (value) =>
     .replace(/\s*\n\s*/g, " ")
     .trim();
 
-// "HU-01: Iniciar sesión" and "HU-1" refer to the same story.
-const storyKey = (story) => {
-  const match = story.match(/HU-?\s*(\d+)/i);
-  return match ? `HU-${Number(match[1])}` : story;
+const escapeRegExp = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+// Builds the functions that recognise user story ids with the given prefix,
+// e.g. "HU" for "HU-01: Iniciar sesión".
+const storyIds = (prefix) => {
+  const id = `${escapeRegExp(prefix)}-?\\s*(\\d+)`;
+  return {
+    // "HU-01: Iniciar sesión" and "HU-1" refer to the same story.
+    key: (story) => {
+      const match = story.match(new RegExp(`^\\s*${id}`, "i"));
+      return match ? `${prefix}-${Number(match[1])}` : story;
+    },
+    // Markdown headings such as "### HU-01: Name ([link](url))".
+    heading: new RegExp(`^[ \\t]*#{2,6}[ \\t]*(${id})[ \\t]*[:.-]?[ \\t]*(.*)$`, "gim"),
+  };
 };
 
 const capitalize = (text) => text.charAt(0).toUpperCase() + text.slice(1);
@@ -77,16 +89,16 @@ const compareKeys = (a, b) => {
 
 const isFailure = (tr) => tr.status === "failed" || tr.status === "broken";
 
-// Reads "## HU-xx: Name ([link](url))" headings, ignoring template placeholders.
-const readStories = async (file) => {
+// Reads the user story headings, ignoring template placeholders without a number.
+const readStories = async (file, ids) => {
   const text = await readFile(file, "utf-8");
   const stories = [];
-  for (const match of text.matchAll(/^#{2,6}\s*(HU-?\s*\d+)\s*[:.-]?\s*(.*)$/gim)) {
-    const name = match[2]
+  for (const match of text.matchAll(ids.heading)) {
+    const name = match[3]
       .replace(/\s*\(\s*\[[^\]]*\]\([^)]*\)\s*\)?/g, "")
       .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
       .trim();
-    stories.push({ key: storyKey(match[1]), title: name ? `${match[1].trim()}: ${name}` : match[1].trim() });
+    stories.push({ key: ids.key(match[1]), title: name ? `${match[1].trim()}: ${name}` : match[1].trim() });
   }
   return stories;
 };
@@ -97,9 +109,11 @@ export default class TraceabilityPlugin {
   }
 
   async done(context, store) {
-    const { output, requirements, sourceRoot } = this.options;
+    const { output, requirements, sourceRoot, storyPrefix = "HU" } = this.options;
+    const ids = storyIds(storyPrefix);
+    const storyKey = ids.key;
     const results = await store.allTestResults();
-    const defined = requirements ? await readStories(requirements).catch(() => []) : [];
+    const defined = requirements ? await readStories(requirements, ids).catch(() => []) : [];
     const outputDir = output && isAbsolute(output) ? dirname(output) : undefined;
 
     const sourceLink = (tr) => {
@@ -170,18 +184,18 @@ export default class TraceabilityPlugin {
       "",
       "> Generada automáticamente al ejecutar `./mvnw verify` a partir de las anotaciones de los tests",
       "> (`src/test/allure/traceability-plugin.mjs`). No la edites a mano: cambia las anotaciones",
-      "> (`@Epic`, `@Feature`, `@Story(\"HU-xx: Nombre\")`, `@Description` y las de capa/tipo del",
+      `> (\`@Epic\`, \`@Feature\`, \`@Story("${storyPrefix}-xx: Nombre")\`, \`@Description\` y las de capa/tipo del`,
       "> paquete `testing`) y vuelve a generar el informe.",
       "",
       `**${results.length}** pruebas: ${passed} pasan, ${failed} fallan.`,
       "",
       "## 1. Resumen por historia de usuario",
       "",
-      `| Historia de usuario | Estado | Pruebas | ${types.map(cell).join(" | ")} |`,
-      `|---|---|---|${types.map(() => "---|").join("")}`,
+      `| ${["Historia de usuario", "Estado", "Pruebas", ...types.map(cell)].join(" | ")} |`,
+      `|${["Historia de usuario", "Estado", "Pruebas", ...types].map(() => "---|").join("")}`,
       ...ordered.map((s) => {
         const counts = types.map((t) => s.tests.filter((tr) => testType(tr) === t).length || "");
-        return `| ${cell(s.title)} | ${storyStatus(s)} | ${s.tests.length} | ${counts.join(" | ")} |`;
+        return `| ${[cell(s.title), storyStatus(s), s.tests.length, ...counts].join(" | ")} |`;
       }),
       "",
     ];

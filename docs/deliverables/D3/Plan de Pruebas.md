@@ -65,7 +65,7 @@ La información se toma de las anotaciones de cada clase o método de prueba:
 | Anotación | Uso |
 |-----------|-----|
 | `@Epic("...")`, `@Feature("...")` | Módulo/épica y funcionalidad a la que pertenece la prueba. |
-| `@Story("HU-01: Iniciar sesión")` | Historia de usuario que verifica. Puede repetirse si verifica varias. El identificador `HU-xx` debe coincidir con el del documento de requisitos. |
+| `@Story("HU-01: Iniciar sesión")` | Historia de usuario que verifica. Puede repetirse si verifica varias. El identificador `HU-xx` debe coincidir con el del documento de requisitos. El prefijo `HU` se puede cambiar en `allurerc.mjs` (`STORY_PREFIX`). |
 | `@Description("...")` | Descripción de lo que verifica la prueba. |
 | `@ControllerTest`, `@ServiceTest`, `@RepositoryTest`, `@ModelTest`, `@Layer("...")` | Capa que se prueba. |
 | `@IsolatedTest` / `@SociableTest` | Prueba aislada (los colaboradores se sustituyen por mocks) o sociable (usa los colaboradores reales, como la base de datos). |

@@ -10,6 +10,10 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
+// Prefix of the user story ids. It must match both the headings in the
+// requirements document (### HU-01: ...) and the tests (@Story("HU-01: ...")).
+const STORY_PREFIX = "HU";
+
 const fromProject = (path) => fileURLToPath(new URL(path, import.meta.url));
 
 // Allure 3.4 only loads plugins installed as "@allurereport/plugin-<name>" packages
@@ -47,6 +51,7 @@ export default {
         output: fromProject("./docs/deliverables/D3/Matriz de trazabilidad.md"),
         requirements: fromProject("./docs/deliverables/D1/Análisis de requisitos del sistema.md"),
         sourceRoot: fromProject("./src/test/java"),
+        storyPrefix: STORY_PREFIX,
       },
     },
   },
