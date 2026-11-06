@@ -57,8 +57,9 @@ const storyIds = (prefix) => {
       const match = story.match(new RegExp(`^\\s*${id}`, "i"));
       return match ? `${prefix}-${Number(match[1])}` : story;
     },
-    // Markdown headings such as "### HU-01: Name ([link](url))".
-    heading: new RegExp(`^[ \\t]*#{2,6}[ \\t]*(${id})[ \\t]*[:.-]?[ \\t]*(.*)$`, "gim"),
+    // Markdown headings such as "### HU-01: Name ([link](url))". Text before the id
+    // is allowed ("### 1.3 — HU-01 (ISSUE#39): Name").
+    heading: new RegExp(`^[ \\t]*#{2,6}[^\\n]*?(?<![A-Za-z0-9])(${id})(?![0-9])[ \\t]*(.*)$`, "gim"),
   };
 };
 
@@ -89,16 +90,27 @@ const compareKeys = (a, b) => {
 
 const isFailure = (tr) => tr.status === "failed" || tr.status === "broken";
 
+// Cleans the name of a story heading: removes issue references such as "(ISSUE#38)",
+// "([Enlace a la Issue](url))" or "[#45](url)", and keeps the text of other links.
+const storyName = (text) =>
+  text
+    .replace(/^\s*\(\s*(issue)?\s*#?\s*\d*\s*\)/i, "")
+    .replace(/^\s*[:.\-–—]\s*/, "")
+    .replace(/\s*\(\s*\[[^\]]*\]\([^)]*\)\s*\)?/g, "")
+    .replace(/\s*\[\s*\(?\s*(issue[^\]]*|#\s*\d+)\s*\)?\s*\]\([^)]*\)/gi, "")
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/\(\s*\)/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
 // Reads the user story headings, ignoring template placeholders without a number.
 const readStories = async (file, ids) => {
   const text = await readFile(file, "utf-8");
   const stories = [];
   for (const match of text.matchAll(ids.heading)) {
-    const name = match[3]
-      .replace(/\s*\(\s*\[[^\]]*\]\([^)]*\)\s*\)?/g, "")
-      .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
-      .trim();
-    stories.push({ key: ids.key(match[1]), title: name ? `${match[1].trim()}: ${name}` : match[1].trim() });
+    const id = match[1].trim();
+    const name = storyName(match[3]);
+    stories.push({ key: ids.key(id), title: name ? `${id}: ${name}` : id });
   }
   return stories;
 };
