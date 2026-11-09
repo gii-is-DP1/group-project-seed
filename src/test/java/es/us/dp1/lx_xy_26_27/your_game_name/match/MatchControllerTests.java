@@ -15,6 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,6 +35,8 @@ import es.us.dp1.lx_xy_26_27.your_game_name.configuration.SecurityConfiguration;
 import es.us.dp1.lx_xy_26_27.your_game_name.exceptions.ResourceNotFoundException;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import es.us.dp1.lx_xy_26_27.your_game_name.user.User;
+import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Story;
 import es.us.dp1.lx_xy_26_27.your_game_name.testing.ControllerTest;
@@ -172,6 +175,26 @@ class MatchControllerTests {
                 .content(objectMapper.writeValueAsString(invalid)))
                 .andExpect(status().isBadRequest());
         verify(matchService, never()).save(any(Match.class));
+    }
+
+    @Test
+    @WithMockUser("player")
+    @Story("HU-04: Crear partida")
+    @Description("R-01: If the service rejects the match because a player is playing another one, the API answers 409")
+    void shouldNotCreateMatchWithBusyPlayer() throws Exception {
+        User busy = new User();
+        busy.setId(5);
+        busy.setUsername("player2");
+        playing.setId(null);
+        playing.setPlayers(Set.of(busy));
+        Match otherMatch = new Match();
+        otherMatch.setId(3);
+        when(matchService.save(any(Match.class))).thenThrow(new ConcurrentMatchException(busy, otherMatch));
+
+        mockMvc.perform(post(BASE_URL).with(csrf()).contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(playing)))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.message").value("Player 'player2' is already playing the match with id 3"));
     }
 
     @Test
