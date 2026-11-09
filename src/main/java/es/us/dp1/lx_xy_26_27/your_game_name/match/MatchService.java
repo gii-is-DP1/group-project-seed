@@ -1,6 +1,7 @@
 package es.us.dp1.lx_xy_26_27.your_game_name.match;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,7 +64,8 @@ public class MatchService {
         if (match.getStatus() == MatchStatus.PLAYING && match.getPlayers() != null) {
             for (User player : match.getPlayers()) {
                 for (Match other : matchRepository.findPlayingMatchesByPlayer(player)) {
-                    if (!match.getId().equals(other.getId()))
+                    // A new match has no id yet: Objects.equals avoids a NullPointerException
+                    if (!Objects.equals(other.getId(), match.getId()))
                         throw new ConcurrentMatchException(player, other);
                 }
             }
