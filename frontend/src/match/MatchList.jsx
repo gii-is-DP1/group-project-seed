@@ -32,6 +32,7 @@ export default function MatchList() {
             <tr>
               <th>Name</th>
               <th>Type</th>
+              <th>Players</th>
               <th>Status</th>
               <th>Start</th>
               <th>Finish</th>

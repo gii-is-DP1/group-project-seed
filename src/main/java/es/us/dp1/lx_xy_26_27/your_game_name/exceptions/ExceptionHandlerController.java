@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import es.us.dp1.lx_xy_26_27.your_game_name.match.ConcurrentMatchException;
+
 @RestControllerAdvice
 public class ExceptionHandlerController {
 
@@ -43,6 +45,15 @@ public class ExceptionHandlerController {
 				request.getDescription(false));
 
 		return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+	}
+
+	// A player cannot play two matches at the same time: 409 instead of 500
+	@ExceptionHandler(ConcurrentMatchException.class)
+	@ResponseStatus(value = HttpStatus.CONFLICT)
+	public ResponseEntity<ErrorMessage> concurrentMatchException(ConcurrentMatchException ex, WebRequest request) {
+		ErrorMessage message = new ErrorMessage(HttpStatus.CONFLICT.value(), new Date(), ex.getMessage(),
+				request.getDescription(false));
+		return new ResponseEntity<>(message, HttpStatus.CONFLICT);
 	}
 
 	@ExceptionHandler(ResourceNotOwnedException.class)

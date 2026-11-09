@@ -1,9 +1,13 @@
 package es.us.dp1.lx_xy_26_27.your_game_name.match;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import es.us.dp1.lx_xy_26_27.your_game_name.model.NamedEntity;
+import es.us.dp1.lx_xy_26_27.your_game_name.user.User;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotBlank;
@@ -11,8 +15,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * A match (game) that players can browse in the lobby. For now it is an isolated
- * entity: the relationship with its players will be added in a later session.
+ * A match (game) that players can browse in the lobby, with the players who take part in it.
  */
 @Getter
 @Setter
@@ -29,6 +32,10 @@ public class Match extends NamedEntity {
 
     // Instant in which the match finished (null means it has not finished yet)
     LocalDateTime finish;
+
+    // Players who take part in the match (live coding session 2)
+    @ManyToMany
+    Set<User> players = new HashSet<>();
 
     @Override
     @NotBlank

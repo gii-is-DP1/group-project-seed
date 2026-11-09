@@ -164,7 +164,8 @@ const match1 = {
     "code": null,
     "start": null,
     "finish": null,
-    "status": "WAITING"
+    "status": "WAITING",
+    "players": [{ "id": 4, "username": "player1" }]
 };
 
 const match2 = {
@@ -173,7 +174,8 @@ const match2 = {
     "code": "1234",
     "start": "2026-10-01T16:00:00",
     "finish": null,
-    "status": "PLAYING"
+    "status": "PLAYING",
+    "players": [{ "id": 6, "username": "player3" }]
 };
 
 export const handlers = [

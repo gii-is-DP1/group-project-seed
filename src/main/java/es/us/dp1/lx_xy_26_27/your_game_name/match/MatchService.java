@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.us.dp1.lx_xy_26_27.your_game_name.exceptions.ResourceNotFoundException;
+import es.us.dp1.lx_xy_26_27.your_game_name.user.User;
 
 @Service
 public class MatchService {
@@ -52,8 +53,21 @@ public class MatchService {
                 .orElseThrow(() -> new ResourceNotFoundException("Match", "id", id));
     }
 
+    /**
+     * Business rule R-01 (live coding session 2): a player cannot play two matches at the same time.
+     * If the match is being played and one of its players is already playing another match,
+     * the match is not saved and a {@link ConcurrentMatchException} is thrown.
+     */
     @Transactional
     public Match save(Match match) {
+        if (match.getStatus() == MatchStatus.PLAYING && match.getPlayers() != null) {
+            for (User player : match.getPlayers()) {
+                for (Match other : matchRepository.findPlayingMatchesByPlayer(player)) {
+                    if (!match.getId().equals(other.getId()))
+                        throw new ConcurrentMatchException(player, other);
+                }
+            }
+        }
         return matchRepository.save(match);
     }
 

@@ -25,3 +25,12 @@ INSERT INTO matches(id,name,code,start,finish) VALUES (2,'Solo para amigos','sup
 INSERT INTO matches(id,name,code,start,finish) VALUES (3,'Partida abierta ya comenzada',NULL,'2026-10-01 15:20:00',NULL);
 INSERT INTO matches(id,name,code,start,finish) VALUES (4,'Partida privada ya comenzada','1234','2026-10-01 16:00:00',NULL);
 INSERT INTO matches(id,name,code,start,finish) VALUES (5,'Partida abierta ya terminada',NULL,'2026-09-30 18:20:00','2026-09-30 19:20:00');
+
+-- Players of each match (live coding session 2)
+--   player1 (id 4): only in matches that are waiting (1 and 2)
+--   player2 (id 5): in a waiting match (2) and in a match being played (3)
+--   player3 (id 6): in two matches being played (3 and 4). This breaks the rule of
+--                   no concurrent matches on purpose, to test the query with several results
+--   player4 (id 7) and player5 (id 8): only in a finished match (5)
+--   player6 (id 9): in no match
+INSERT INTO matches_players(match_id,players_id) VALUES (1,4),(2,4),(2,5),(3,5),(3,6),(4,6),(5,7),(5,8);

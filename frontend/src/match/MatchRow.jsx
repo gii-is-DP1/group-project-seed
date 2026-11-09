@@ -14,6 +14,7 @@ export default function MatchRow({ match, onDelete }) {
     <tr>
       <td>{match.name}</td>
       <td>{match.code ? "Private" : "Public"}</td>
+      <td>{match.players?.map((p) => p.username).join(", ") || "-"}</td>
       <td>
         <Badge color={statusColors[match.status] ?? "light"}>{match.status}</Badge>
       </td>
@@ -41,6 +42,7 @@ MatchRow.propTypes = {
     status: PropTypes.oneOf(["WAITING", "PLAYING", "FINISHED"]),
     start: PropTypes.string,
     finish: PropTypes.string,
+    players: PropTypes.arrayOf(PropTypes.shape({ username: PropTypes.string })),
   }).isRequired,
   onDelete: PropTypes.func.isRequired,
 };

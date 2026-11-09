@@ -51,7 +51,17 @@ _Ej:_
 |_Mockup del formulario de registro_|
 |El visitante abre el formulario de registro, rellena sus datos y confirma. Si el nombre de usuario ya existe se le muestra un error; si no, se crea su cuenta y puede iniciar sesión con ella.|
 
+### HU-03: Consultar el lobby de partidas ([Enlace a la Issue asociada a la historia de usuario]())
+|Como jugador quiero ver en el lobby las partidas existentes, con su estado y sus jugadores, y poder buscarlas por nombre o por estado para poder elegir a cuál unirme o cuál observar.|
+|-----|
+|_Mockup del listado de partidas_|
+|El jugador abre el listado de partidas y ve su nombre, si son públicas o privadas, sus jugadores y su estado. Puede filtrar por nombre o por estado (esperando jugadores, en curso o terminada).|
 
+### HU-04: Crear partida ([Enlace a la Issue asociada a la historia de usuario]())
+|Como jugador quiero crear una partida indicando su nombre y sus jugadores para poder jugar con ellos.|
+|-----|
+|_Mockup del formulario de creación de partida_|
+|El jugador indica el nombre de la partida (obligatorio), un código si quiere que sea privada y sus jugadores, y confirma. Si algún dato no es válido o se incumple alguna regla de negocio (ver R-01), se muestra un error y la partida no se crea.|
 
 ## Diagrama conceptual del sistema
 _En esta sección debe proporcionar un diagrama UML de clases que describa el modelo de datos a implementar en la aplicación. Este diagrama estará anotado con las restricciones simples (de formato/patrón, unicidad, obligatoriedad, o valores máximos y mínimos) de los datos a gestionar por la aplicación. _
@@ -88,6 +98,9 @@ _Si deseais usar esta herramienta para generar vuestro(s) diagramas con esta her
 ## Reglas de Negocio
 ### R-< X > < Nombre Regla de negocio >
 _< Descripción de la restricción a imponer >_
+
+### R-01 – Un jugador no puede jugar dos partidas a la vez
+Un jugador no puede participar en dos partidas en curso (empezadas y no terminadas) al mismo tiempo. Si al guardar una partida en curso alguno de sus jugadores ya está jugando otra, la partida no se guarda y el sistema muestra un error indicando el jugador y la otra partida (la API responde 409 Conflict). Afecta a HU-04.
 
 _Ej:_ 
 ### R1 – Diagnósticos imposibles
