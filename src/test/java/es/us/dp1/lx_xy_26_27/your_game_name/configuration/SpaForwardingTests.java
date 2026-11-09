@@ -15,6 +15,9 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
 
+import es.us.dp1.lx_xy_26_27.your_game_name.testing.ControllerTest;
+import es.us.dp1.lx_xy_26_27.your_game_name.testing.SociableTest;
+
 /**
  * Checks that the React routes are forwarded to index.html and are public when the
  * frontend is packaged in the JAR, while the API is still protected.
@@ -22,6 +25,8 @@ import io.qameta.allure.Owner;
 @Epic("Configuration")
 @Feature("Packaged frontend (SPA)")
 @Owner("DP1-tutors")
+@ControllerTest
+@SociableTest
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase

@@ -247,7 +247,11 @@ The main results are written to:
 
 - `target/surefire-reports/`: Java test results.
 - `target/site/jacoco/index.html`: backend coverage report.
-- `target/site/test-status/index.html`: Allure report.
+- `target/site/test-status/index.html`: Allure summary page, linking to two
+  reports: `awesome/` (tests by epic / feature / story) and `layers/` (also
+  by layer and isolation, using the annotations in the `testing` test package).
+- `docs/deliverables/D3/Matriz de trazabilidad.md`: traceability matrix between
+  user stories and tests, generated from the test annotations.
 - `docs/deliverables/D3/coverage/`: copy of the coverage report used in the
   project deliverables.
 

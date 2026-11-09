@@ -35,15 +35,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import es.us.dp1.lx_xy_26_27.your_game_name.auth.payload.request.SignupRequest;
 import es.us.dp1.lx_xy_26_27.your_game_name.user.UserService;
+import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
+import io.qameta.allure.Story;
+
+import es.us.dp1.lx_xy_26_27.your_game_name.testing.ControllerTest;
+import es.us.dp1.lx_xy_26_27.your_game_name.testing.IsolatedTest;
 
 /**
  * Test class for {@link AuthController}
  *
  */
 
+@ControllerTest
+@IsolatedTest
  @Epic("Users & Admin Module")
  @Feature("Authentication")
  @Owner("DP1-tutors")
@@ -103,6 +110,8 @@ class AuthControllerTests {
 	}
 
 
+	@Story("HU-01: Iniciar sesión")
+	@Description("Un usuario con credenciales válidas obtiene un token JWT.")
 	@Test
 	void shouldAuthenticateUser() throws Exception {
 		Authentication auth = Mockito.mock(Authentication.class);
@@ -117,6 +126,8 @@ class AuthControllerTests {
 				.andExpect(jsonPath("$.id").value(userDetails.getId())).andExpect(jsonPath("$.token").value(token));
 	}
 
+	@Story("HU-01: Iniciar sesión")
+	@Description("El endpoint de validación acepta un token válido.")
 	@Test
 	void shouldValidateToken() throws Exception {
 		when(this.jwtUtils.validateJwtToken(token)).thenReturn(true);
@@ -126,6 +137,8 @@ class AuthControllerTests {
 				.andExpect(jsonPath("$").value(true));
 	}
 
+	@Story("HU-01: Iniciar sesión")
+	@Description("El endpoint de validación rechaza un token no válido.")
 	@Test
 	void shouldNotValidateToken() throws Exception {
 		when(this.jwtUtils.validateJwtToken(token)).thenReturn(false);
@@ -135,6 +148,8 @@ class AuthControllerTests {
 				.andExpect(jsonPath("$").value(false));
 	}
 
+	@Story("HU-02: Registrar usuario")
+	@Description("Un usuario nuevo puede registrarse.")
 	@Test
 	void shouldRegisterUser() throws Exception {
 		when(this.userService.existsUser(signupRequest.getUsername())).thenReturn(false);
@@ -145,6 +160,8 @@ class AuthControllerTests {
 				.andExpect(jsonPath("$.message").value("User registered successfully!"));
 	}
 
+	@Story("HU-02: Registrar usuario")
+	@Description("No se puede registrar un usuario con un nombre ya existente.")
 	@Test
 	void shouldNotRegisterUserWithExistingUsername() throws Exception {
 		when(this.userService.existsUser(signupRequest.getUsername())).thenReturn(true);

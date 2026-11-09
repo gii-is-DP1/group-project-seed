@@ -13,13 +13,20 @@ import es.us.dp1.lx_xy_26_27.your_game_name.auth.payload.request.SignupRequest;
 import es.us.dp1.lx_xy_26_27.your_game_name.user.AuthoritiesService;
 import es.us.dp1.lx_xy_26_27.your_game_name.user.User;
 import es.us.dp1.lx_xy_26_27.your_game_name.user.UserService;
+import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
+import io.qameta.allure.Story;
+
+import es.us.dp1.lx_xy_26_27.your_game_name.testing.ServiceTest;
+import es.us.dp1.lx_xy_26_27.your_game_name.testing.SociableTest;
 
 @Epic("Users & Admin Module")
 @Feature("Authentication")
 @Owner("DP1-tutors")
+@ServiceTest
+@SociableTest
 @SpringBootTest
 public class AuthServiceTests {
 
@@ -30,6 +37,8 @@ public class AuthServiceTests {
 	@Autowired
 	protected AuthoritiesService authoritiesService;
 
+	@Story("HU-02: Registrar usuario")
+	@Description("El registro crea un usuario con rol ADMIN.")
 	@Test
 	@Transactional
 	public void shouldCreateAdminUser() {
@@ -42,6 +51,8 @@ public class AuthServiceTests {
 
 
 
+	@Story("HU-02: Registrar usuario")
+	@Description("El registro crea un usuario con rol PLAYER.")
 	@Test
 	@Transactional
 	public void shouldCreatePlayerUser() {

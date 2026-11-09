@@ -9,7 +9,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import es.us.dp1.lx_xy_26_27.your_game_name.user.Authorities;
+import es.us.dp1.lx_xy_26_27.your_game_name.testing.IsolatedTest;
+import es.us.dp1.lx_xy_26_27.your_game_name.testing.Layer;
 
+@Layer("security")
+@IsolatedTest
 class JwtUtilsTests {
 
 	private static final String TEST_SECRET =

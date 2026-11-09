@@ -38,12 +38,17 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
 
+import es.us.dp1.lx_xy_26_27.your_game_name.testing.ControllerTest;
+import es.us.dp1.lx_xy_26_27.your_game_name.testing.IsolatedTest;
+
 /**
  * Test class for the {@link VetController}
  */
 @Epic("Users & Admin Module")
 @Feature("Users Management")
 @Owner("DP1-tutors")
+@ControllerTest
+@IsolatedTest
 @WebMvcTest(controllers = UserRestController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class), excludeAutoConfiguration = SecurityConfiguration.class)
 class UserControllerTests {
 

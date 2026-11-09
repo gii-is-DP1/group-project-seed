@@ -36,6 +36,21 @@ _Os recomentamos usar la siguiente plantilla de contenidos que usa un formato ta
 |Mockups (prototipos en formato imagen de baja fidelidad) de la interfaz de usuario del sistema|
 |Decripción de las interacciones concretas a realizar con la interfaz de usuario del sistema para lleva a cabo la historia. |
 
+_El identificador de cada historia (por defecto con el prefijo `HU-`) debe ser el mismo que se use en las anotaciones `@Story` de las pruebas que la verifican: así la [matriz de trazabilidad](../D3/Matriz%20de%20trazabilidad.md) puede relacionarlas y avisar de las historias que no tienen pruebas. Si preferís otro prefijo, cambiadlo en `allurerc.mjs` (`STORY_PREFIX`)._
+
+_Ej:_
+### HU-01: Iniciar sesión ([Enlace a la Issue asociada a la historia de usuario]())
+|Como usuario registrado quiero que el sistema me permita iniciar sesión con mi nombre de usuario y contraseña para poder acceder a las funcionalidades de mi rol.|
+|-----|
+|_Mockup de la pantalla de inicio de sesión_|
+|El usuario abre la pantalla de inicio de sesión, introduce su nombre de usuario y contraseña y confirma. Si las credenciales son correctas accede a la aplicación; si no, se le muestra un mensaje de error.|
+
+### HU-02: Registrar usuario ([Enlace a la Issue asociada a la historia de usuario]())
+|Como visitante quiero que el sistema me permita registrarme indicando mis datos para poder acceder a la aplicación.|
+|-----|
+|_Mockup del formulario de registro_|
+|El visitante abre el formulario de registro, rellena sus datos y confirma. Si el nombre de usuario ya existe se le muestra un error; si no, se crea su cuenta y puede iniciar sesión con ella.|
+
 
 
 ## Diagrama conceptual del sistema

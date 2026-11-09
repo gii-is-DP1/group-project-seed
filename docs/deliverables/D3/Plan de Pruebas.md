@@ -38,7 +38,7 @@ Las pruebas de integración se enfocarán en evaluar la interacción entre los d
 - **Maven**: Gestión de dependencias y ejecución de las pruebas.
 - **JUnit**: Framework de pruebas unitarias.
 - **Jacoco**: Generación de informes de cobertura de código. Si se ejecuta el comando de maven install, se copiará el informe de cobertura a la subcarpeta del repositorio /docs/deliverables/D3/coverage (puede visualizarse pulsando en el fichero index.html de dicho directorio).
-- **Allure**: Generación de informes de estado de las últimas ejecuciones de las pruebas. Permite agrupar las pruebas por módulo/épica y feature. Si se ejecuta el comando de maven install, se copiará el informe de estado a la subcarpeta del repositorio /docs/deliverables/D3/status (puede visualizarse pulsando en el fichero index.html de dicho directorio).
+- **Allure**: Generación de informes de estado de las últimas ejecuciones de las pruebas. Genera dos informes: uno agrupado por módulo/épica, feature e historia de usuario, y otro que además agrupa por capa (controlador, servicio...) y tipo de prueba (aislada o sociable). También genera la [matriz de trazabilidad](Matriz%20de%20trazabilidad.md) a partir de las anotaciones de los tests. Si se ejecuta el comando de maven install, se copiarán los informes a la subcarpeta del repositorio /docs/deliverables/D3/status (pueden visualizarse pulsando en el fichero index.html de dicho directorio).
 - **Jest**: Framework para pruebas unitarias en javascript.
 - **React-test**: Librería para la creación de pruebas unitarias de componentes React.
 
@@ -46,25 +46,53 @@ Las pruebas de integración se enfocarán en evaluar la interacción entre los d
 Las pruebas se ejecutarán en el entorno de desarrollo y, eventualmente, en el entorno de pruebas del servidor de integración continua.
 
 ## 5. Planificación de Pruebas
-### 5.1 Estado y trazadibilidad de Pruebas por Módulo y Épica
+### 5.1 Estado y trazabilidad de Pruebas por Módulo y Épica
 
-El informe de estado de las pruebas (con trazabilidad de éstas hacia los módulos y las épicas/historias de usaurio) se encuentra [aquí](
-https://gii-is-dp1.github.io/group-project-seed/deliverables/D3/status/#behaviors).
+El informe de estado de las pruebas se encuentra [aquí](
+https://gii-is-dp1.github.io/group-project-seed/deliverables/D3/status/). Incluye dos vistas:
 
-### 5.2 Cobertura de Pruebas
+- [Pruebas por épica / feature / historia de usuario](
+https://gii-is-dp1.github.io/group-project-seed/deliverables/D3/status/awesome/).
+- [Pruebas por épica / feature, capa y tipo (aislada o sociable)](
+https://gii-is-dp1.github.io/group-project-seed/deliverables/D3/status/layers/).
+
+### 5.2 Matriz de trazabilidad
+
+La [matriz de trazabilidad](Matriz%20de%20trazabilidad.md) entre historias de usuario y pruebas se genera automáticamente al ejecutar `./mvnw verify` (o `install`); no se debe editar a mano. Para cada historia de usuario indica cuántas pruebas la cubren y de qué tipo, avisa de las historias del [documento de requisitos](../D1/Análisis%20de%20requisitos%20del%20sistema.md) que no tienen pruebas, y detalla cada prueba con su descripción, tipo y estado.
+
+La información se toma de las anotaciones de cada clase o método de prueba:
+
+| Anotación | Uso |
+|-----------|-----|
+| `@Epic("...")`, `@Feature("...")` | Módulo/épica y funcionalidad a la que pertenece la prueba. |
+| `@Story("HU-01: Iniciar sesión")` | Historia de usuario que verifica. Puede repetirse si verifica varias. El identificador `HU-xx` debe coincidir con el del documento de requisitos. El prefijo `HU` se puede cambiar en `allurerc.mjs` (`STORY_PREFIX`). |
+| `@Description("...")` | Descripción de lo que verifica la prueba. |
+| `@ControllerTest`, `@ServiceTest`, `@RepositoryTest`, `@ModelTest`, `@Layer("...")` | Capa que se prueba. |
+| `@IsolatedTest` / `@SociableTest` | Prueba aislada (los colaboradores se sustituyen por mocks) o sociable (usa los colaboradores reales, como la base de datos). |
+
+Las anotaciones de capa y tipo están en el paquete de pruebas `es.us.dp1.lx_xy_26_27.your_game_name.testing`. Por ejemplo:
+
+```java
+@Epic("Users & Admin Module")
+@Feature("Authentication")
+@ControllerTest
+@IsolatedTest
+@WebMvcTest(AuthController.class)
+class AuthControllerTests {
+
+    @Test
+    @Story("HU-01: Iniciar sesión")
+    @Description("Un usuario con credenciales válidas obtiene un token JWT.")
+    void shouldAuthenticateUser() { ... }
+}
+```
+
+### 5.3 Cobertura de Pruebas
 
 El informe de cobertura de pruebas se puede consultar [aquí](
 https://gii-is-dp1.github.io/group-project-seed/deliverables/D3/coverage/).
 
-
-
-*Nota importante para el alumno*: A la hora de entregar el proyecto, debes modificar la url para que esté asociada al respositorio concreto de tu proyecto. Date cuenta de que ahora mismo apunta al repositorio _gii-is-DP1/group-project-seed_.
-
-
-| Historia de Usuario | Prueba | Descripción | Estado |Tipo |
-|---------------------|--------|-------------|--------|--------|
-| HU-01: Iniciar sesión | [UTB-1:TestLogin](https://github.com//gii-is-DP1/group-project-seed/blob/main/src/test/java/es/us/dp1/lx_xy_24_25/your_game_name/auth/AuthControllerTest.java) | Verifica que un usuario puede iniciar sesión con credenciales válidas. | Implementada | Unitaria en backend de controlador aislaada |
-| HU-02: Registrar usuario | [UTB-2:TestRegister](https://github.com//gii-is-DP1/group-project-seed/blob/main/src/test/java/es/us/dp1/lx_xy_24_25/your_game_name/auth/AuthServiceTest.java) | Verifica que un nuevo usuario puede registrarse en el sistema. | Implementada |Unitaria en backend a nivel de Servicio, prueba social incluyendo a la BD y los repositorios. |
+*Nota importante para el alumno*: A la hora de entregar el proyecto, debes modificar las url para que estén asociadas al respositorio concreto de tu proyecto. Date cuenta de que ahora mismo apuntan al repositorio _gii-is-DP1/group-project-seed_.
 
 ## 6. Criterios de Aceptación
 
