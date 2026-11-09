@@ -35,6 +35,9 @@ import es.us.dp1.lx_xy_26_27.your_game_name.exceptions.ResourceNotFoundException
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
+import io.qameta.allure.Story;
+import es.us.dp1.lx_xy_26_27.your_game_name.testing.ControllerTest;
+import es.us.dp1.lx_xy_26_27.your_game_name.testing.IsolatedTest;
 
 /**
  * Slice tests of {@link MatchController}: the service is mocked, so these tests only
@@ -43,6 +46,9 @@ import io.qameta.allure.Owner;
 @Epic("Matches Module")
 @Feature("Matches Lobby")
 @Owner("DP1-tutors")
+@Story("HU-03: Consultar el lobby de partidas")
+@ControllerTest
+@IsolatedTest
 @WebMvcTest(controllers = MatchController.class, excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class), excludeAutoConfiguration = SecurityConfiguration.class)
 class MatchControllerTests {
 

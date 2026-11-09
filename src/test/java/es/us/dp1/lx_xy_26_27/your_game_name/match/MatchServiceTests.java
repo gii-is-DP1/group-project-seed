@@ -18,6 +18,9 @@ import es.us.dp1.lx_xy_26_27.your_game_name.exceptions.ResourceNotFoundException
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
+import io.qameta.allure.Story;
+import es.us.dp1.lx_xy_26_27.your_game_name.testing.ServiceTest;
+import es.us.dp1.lx_xy_26_27.your_game_name.testing.SociableTest;
 
 /**
  * Integration tests of {@link MatchService} against the matches defined in data.sql:
@@ -26,6 +29,9 @@ import io.qameta.allure.Owner;
 @Epic("Matches Module")
 @Feature("Matches Lobby")
 @Owner("DP1-tutors")
+@Story("HU-03: Consultar el lobby de partidas")
+@ServiceTest
+@SociableTest
 @SpringBootTest
 @AutoConfigureTestDatabase
 class MatchServiceTests {
