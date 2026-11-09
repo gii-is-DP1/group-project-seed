@@ -20,6 +20,12 @@ describe("MatchList", () => {
     expect(screen.getAllByRole("row")).toHaveLength(3);
   });
 
+  test("renders the players of each match", async () => {
+    render(<MatchList />);
+    expect(await screen.findByRole("cell", { name: "player1" })).toBeInTheDocument();
+    expect(screen.getByRole("cell", { name: "player3" })).toBeInTheDocument();
+  });
+
   test("filters the matches by state", async () => {
     const user = userEvent.setup();
     render(<MatchList />);
